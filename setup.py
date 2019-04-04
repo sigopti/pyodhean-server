@@ -40,5 +40,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         'pyodhean',
+        'flask>=1.0.0',
+        'python-dotenv>=0.9.0',
+        'marshmallow>=3.0.0rc5',
+        'webargs>=5.0.0',
     ],
 )
