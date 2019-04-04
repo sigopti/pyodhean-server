@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+"""Tesk PyODHeaN solver task"""
+# pylint: disable=invalid-name
 
 import time
 
 from pprint import pprint
 
-from pyodhean_server.celery import app
 from pyodhean_server.task import solve
 
 
@@ -32,7 +32,7 @@ pprint(json_output)
 
 # Async
 task_id = solve.delay(json_input)
-while not app.AsyncResult(task_id).ready():
+while not solve.AsyncResult(task_id).ready():
     time.sleep(1)
-json_output = app.AsyncResult(task_id).result
+json_output = solve.AsyncResult(task_id).result
 pprint(json_output)
