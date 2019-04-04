@@ -40,6 +40,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'pyodhean',
+        'celery>=4.2.0',
+        'librabbitmq>=2.0.0',  # optional optimized C client
         'flask>=1.0.0',
         'python-dotenv>=0.9.0',
         'marshmallow>=3.0.0rc5',
