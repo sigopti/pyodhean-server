@@ -7,7 +7,7 @@ from celery import Celery
 
 app = Celery(
     'PyODHeaN Solver',
-    backend='rpc://',
-    broker='pyamqp://',
+    backend='redis://',
+    broker='redis://',
     include=['pyodhean_server.task'],
 )

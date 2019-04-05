@@ -38,8 +38,16 @@ while client.get(
         ).get_data(as_text=True) == 'PENDING':
     time.sleep(1)
 
-result = client.get(
-    'result/{}'.format(task_id),
-).get_data(as_text=True)
-
+# When using RabbitMQ as result backend (RPC backend), results are meant to be
+# consumed only once (https://github.com/celery/celery/issues/5414).
+# In practice, the result may be lost if queried several times.
+# A reproducible case is when another task ID is queried. Then querying for
+# original task ID will fail on a second attempt.
+dummy_task_id = '00000000-0000-0000-0000-000000000000'
+result = client.get('result/{}'.format(dummy_task_id)).get_data(as_text=True)
+assert json.loads(result) is None
+result = client.get('result/{}'.format(task_id)).get_data(as_text=True)
+assert json.loads(result) is not None
+result = client.get('result/{}'.format(task_id)).get_data(as_text=True)
+assert json.loads(result) is not None
 pprint(json.loads(result))
