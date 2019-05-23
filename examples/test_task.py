@@ -31,7 +31,7 @@ json_output = solve(json_input)
 pprint(json_output)
 
 # Async
-task_id = solve.delay(json_input)
+task_id = solve.delay(json_input).id
 while not solve.AsyncResult(task_id).ready():
     time.sleep(1)
 json_output = solve.AsyncResult(task_id).result
