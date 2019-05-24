@@ -28,13 +28,13 @@ json_input = {
 client = app.test_client()
 
 task_id = client.post(
-    'enqueue',
+    '/tasks/',
     data=json.dumps(json_input)
 ).get_data(as_text=True)
 
 
 while client.get(
-        'status/{}'.format(task_id)
+        '/tasks/{}/status'.format(task_id)
         ).get_data(as_text=True) == 'PENDING':
     time.sleep(1)
 
@@ -44,10 +44,16 @@ while client.get(
 # A reproducible case is when another task ID is queried. Then querying for
 # original task ID will fail on a second attempt.
 dummy_task_id = '00000000-0000-0000-0000-000000000000'
-result = client.get('result/{}'.format(dummy_task_id)).get_data(as_text=True)
+result = client.get(
+    '/tasks/{}/result'.format(dummy_task_id)).get_data(as_text=True)
 assert json.loads(result) is None
-result = client.get('result/{}'.format(task_id)).get_data(as_text=True)
+result = client.get(
+    '/tasks/{}/result'.format(task_id)).get_data(as_text=True)
 assert json.loads(result) is not None
-result = client.get('result/{}'.format(task_id)).get_data(as_text=True)
+result = client.get(
+    '/tasks/{}/result'.format(task_id)).get_data(as_text=True)
 assert json.loads(result) is not None
+
+
+# Display result
 pprint(json.loads(result))
