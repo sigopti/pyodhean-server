@@ -14,6 +14,16 @@ json_input = {
             # P1
             {
                 'id': [0.0, 0.0], 'kWh': 0, 'tot_kWh': 15467900,
+                'technologies': {
+                    'k1': {
+                        'efficiency': 0.9,
+                        't_out_max': 100,
+                        't_in_min': 30,
+                        'production_unitary_cost': 800,
+                        'energy_unitary_cost': 0.08,
+                        'energy_cost_inflation_rate': 0.04,
+                    },
+                },
             },
         ],
         'consumption': [
