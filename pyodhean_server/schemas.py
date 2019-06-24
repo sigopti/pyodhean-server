@@ -55,10 +55,10 @@ class InputConsumptionNode(InputNode):
     kW = ma.fields.Float(
         required=True
     )
-    Tin = ma.fields.Float(
+    t_in = ma.fields.Float(
         required=True
     )
-    Tout = ma.fields.Float(
+    t_out = ma.fields.Float(
         required=True
     )
 
