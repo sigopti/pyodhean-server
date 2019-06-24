@@ -13,7 +13,7 @@ json_input = {
         'production': [
             # P1
             {
-                'id': [0.0, 0.0], 'kWh': 0, 'tot_kWh': 15467900,
+                'id': [0.0, 0.0],
                 'technologies': {
                     'k1': {
                         'efficiency': 0.9,
@@ -29,13 +29,11 @@ json_input = {
         'consumption': [
             # C1
             {
-                'id': [2.0, 5.0], 'kWh': 5382100.0, 'tot_kWh': 15467900,
-                'kW': 80, 't_in': 80, 't_out': 60,
+                'id': [2.0, 5.0], 'kW': 80, 't_in': 80, 't_out': 60,
             },
             # C2
             {
-                'id': [30.0, 50.0], 'kWh': 0, 'tot_kWh': 10085800,
-                'kW': 80, 't_in': 80, 't_out': 60,
+                'id': [30.0, 50.0], 'kW': 80, 't_in': 80, 't_out': 60,
             },
         ],
     },

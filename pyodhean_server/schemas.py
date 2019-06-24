@@ -12,12 +12,6 @@ class InputNode(ma.Schema):
         (ma.fields.Float, ma.fields.Float),
         required=True,
     )
-    kWh = ma.fields.Float(
-        required=True
-    )
-    tot_kWh = ma.fields.Float(
-        required=True
-    )
 
 
 class InputProductionTechnologyNode(ma.Schema):
