@@ -39,9 +39,9 @@ json_input = {
     },
     'links': [
         # P1 -> C1
-        {'Length': 10.0, 'source': [0.0, 0.0], 'target': [2.0, 5.0]},
+        {'length': 10.0, 'source': [0.0, 0.0], 'target': [2.0, 5.0]},
         # C1 -> C2
-        {'Length': 100.0, 'source': [2.0, 5.0], 'target': [30.0, 50.0]},
+        {'length': 100.0, 'source': [2.0, 5.0], 'target': [30.0, 50.0]},
     ]
 }
 

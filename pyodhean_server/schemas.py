@@ -69,7 +69,7 @@ class InputNodes(ma.Schema):
 
 
 class InputLink(ma.Schema):
-    Length = ma.fields.Float(
+    length = ma.fields.Float(
         required=True
     )
     source = ma.fields.Tuple(
