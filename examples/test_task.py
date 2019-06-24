@@ -9,19 +9,31 @@ from pyodhean_server.task import solve
 
 
 json_input = {
-    'nodes': [
-        # P1
-        {'id': [0, 0], 'kWh': 0, 'tot_kWh': 15467900, 'Type': 'Source'},
-        # C1
-        {'id': [2, 5], 'kWh': 5382100.0, 'tot_kWh': 15467900},
-        # C2
-        {'id': [30, 50], 'kWh': 0, 'tot_kWh': 10085800}
-    ],
+    'nodes': {
+        'production': [
+            # P1
+            {
+                'id': [0.0, 0.0], 'kWh': 0, 'tot_kWh': 15467900,
+            },
+        ],
+        'consumption': [
+            # C1
+            {
+                'id': [2.0, 5.0], 'kWh': 5382100.0, 'tot_kWh': 15467900,
+                'kW': 80, 'Tin': 80, 'Tout': 60,
+            },
+            # C2
+            {
+                'id': [30.0, 50.0], 'kWh': 0, 'tot_kWh': 10085800,
+                'kW': 80, 'Tin': 80, 'Tout': 60,
+            },
+        ],
+    },
     'links': [
         # P1 -> C1
-        {'Length': 10, 'source': [0, 0], 'target': [2, 5]},
+        {'Length': 10.0, 'source': [0.0, 0.0], 'target': [2.0, 5.0]},
         # C1 -> C2
-        {'Length': 100, 'source': [2, 5], 'target': [30, 50]},
+        {'Length': 100.0, 'source': [2.0, 5.0], 'target': [30.0, 50.0]},
     ]
 }
 

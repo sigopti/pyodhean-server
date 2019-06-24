@@ -18,8 +18,33 @@ class InputNode(ma.Schema):
     tot_kWh = ma.fields.Float(
         required=True
     )
-    Type = ma.fields.Str(
-        validate=ma.validate.OneOf(('Source',))
+
+
+class InputProductionNode(InputNode):
+    """Production node"""
+
+
+class InputConsumptionNode(InputNode):
+    """Consumption node"""
+    kW = ma.fields.Float(
+        required=True
+    )
+    Tin = ma.fields.Float(
+        required=True
+    )
+    Tout = ma.fields.Float(
+        required=True
+    )
+
+
+class InputNodes(ma.Schema):
+    production = ma.fields.List(
+        ma.fields.Nested(InputProductionNode),
+        required=True
+    )
+    consumption = ma.fields.List(
+        ma.fields.Nested(InputConsumptionNode),
+        required=True
     )
 
 
@@ -38,8 +63,8 @@ class InputLink(ma.Schema):
 
 
 class InputSchema(ma.Schema):
-    nodes = ma.fields.List(
-        ma.fields.Nested(InputNode),
+    nodes = ma.fields.Nested(
+        InputNodes,
         required=True
     )
     links = ma.fields.List(
