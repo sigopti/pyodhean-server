@@ -49,13 +49,13 @@ json_input = {
 
 client = app.test_client()
 
-response = client.post('/tasks/', data=json.dumps(json_input))
+response = client.post('/solver/tasks/', data=json.dumps(json_input))
 assert response.status_code == 200
 
 task_id = response.get_data(as_text=True)
 
 while client.get(
-        '/tasks/{}/status'.format(task_id)
+        '/solver/tasks/{}/status'.format(task_id)
         ).get_data(as_text=True) == 'PENDING':
     time.sleep(1)
 
@@ -65,15 +65,15 @@ while client.get(
 # A reproducible case is when another task ID is queried. Then querying for
 # original task ID will fail on a second attempt.
 dummy_task_id = '00000000-0000-0000-0000-000000000000'
-response = client.get('/tasks/{}/result'.format(dummy_task_id))
+response = client.get('/solver/tasks/{}/result'.format(dummy_task_id))
 assert response.status_code == 200
 assert json.loads(response.get_data(as_text=True)) is None
 
-response = client.get('/tasks/{}/result'.format(task_id))
+response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
 assert json.loads(response.get_data(as_text=True)) is not None
 
-response = client.get('/tasks/{}/result'.format(task_id))
+response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
 result = json.loads(response.get_data(as_text=True))
 assert result is not None
