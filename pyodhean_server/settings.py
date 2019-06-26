@@ -8,3 +8,9 @@ class DefaultConfig:
     OPENAPI_URL_PREFIX = '/'
     OPENAPI_REDOC_PATH = '/'
     OPENAPI_REDOC_VERSION = 'next'
+
+
+class DefaultCeleryConfig:
+    """Default Celery configuration"""
+    broker_url = 'redis://'
+    result_backend = 'redis://'
