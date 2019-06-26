@@ -5,8 +5,25 @@ import time
 import json
 from pprint import pprint
 
+from werkzeug.utils import cached_property
+from flask import Response
+
 from pyodhean_server.app import app
 
+
+class JSONResponse(Response):
+    # pylint: disable=too-many-ancestors
+    """
+    A Response class with extra useful helpers, i.e. ``.json`` property.
+
+    Taken from https://github.com/frol/flask-restplus-server-example/
+    """
+    @cached_property
+    def json(self):
+        return json.loads(self.get_data(as_text=True))
+
+
+app.response_class = JSONResponse
 
 json_input = {
     'nodes': {
@@ -52,11 +69,10 @@ client = app.test_client()
 response = client.post('/solver/tasks/', data=json.dumps(json_input))
 assert response.status_code == 200
 
-task_id = response.get_data(as_text=True)
+task_id = response.json['task_id']
 
 while client.get(
-        '/solver/tasks/{}/status'.format(task_id)
-        ).get_data(as_text=True) == 'PENDING':
+        '/solver/tasks/{}/status'.format(task_id)).json['status'] == 'PENDING':
     time.sleep(1)
 
 # When using RabbitMQ as result backend (RPC backend), results are meant to be
@@ -67,16 +83,19 @@ while client.get(
 dummy_task_id = '00000000-0000-0000-0000-000000000000'
 response = client.get('/solver/tasks/{}/result'.format(dummy_task_id))
 assert response.status_code == 200
-assert json.loads(response.get_data(as_text=True)) is None
+assert response.json == {}
 
 response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
-assert json.loads(response.get_data(as_text=True)) is not None
+result = response.json
+result['status'] = 'ok'
+result['success'] = True
+result['termination_condition'] = 'optimal'
+assert 'solution' in result
 
 response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
-result = json.loads(response.get_data(as_text=True))
-assert result is not None
+assert response.json == result
 
 # Display result
 pprint(result)

@@ -7,14 +7,30 @@ This module defines schema used to deserialize and validate API inputs
 import marshmallow as ma
 
 
-class InputNode(ma.Schema):
+class Schema(ma.Schema):
+    class Meta:
+        ordered = True
+
+
+class NodeSchema(Schema):
     id = ma.fields.Tuple(
         (ma.fields.Float, ma.fields.Float),
         required=True,
     )
 
 
-class InputProductionTechnologyNode(ma.Schema):
+class LinkSchema(Schema):
+    source = ma.fields.Tuple(
+        (ma.fields.Float, ma.fields.Float),
+        required=True,
+    )
+    target = ma.fields.Tuple(
+        (ma.fields.Float, ma.fields.Float),
+        required=True,
+    )
+
+
+class InputProductionTechnologySchema(Schema):
     efficiency = ma.fields.Float(
         required=True,
     )
@@ -35,17 +51,15 @@ class InputProductionTechnologyNode(ma.Schema):
     )
 
 
-class InputProductionNode(InputNode):
-    """Production node"""
+class InputProductionNodeSchema(NodeSchema):
     technologies = ma.fields.Dict(
         ma.fields.String(),
-        ma.fields.Nested(InputProductionTechnologyNode),
+        ma.fields.Nested(InputProductionTechnologySchema),
         required=True,
     )
 
 
-class InputConsumptionNode(InputNode):
-    """Consumption node"""
+class InputConsumptionNodeSchema(NodeSchema):
     kW = ma.fields.Float(
         required=True
     )
@@ -57,37 +71,209 @@ class InputConsumptionNode(InputNode):
     )
 
 
-class InputNodes(ma.Schema):
+class InputNodesSchema(Schema):
     production = ma.fields.List(
-        ma.fields.Nested(InputProductionNode),
+        ma.fields.Nested(InputProductionNodeSchema),
         required=True
     )
     consumption = ma.fields.List(
-        ma.fields.Nested(InputConsumptionNode),
+        ma.fields.Nested(InputConsumptionNodeSchema),
         required=True
     )
 
 
-class InputLink(ma.Schema):
+class InputLinkSchema(LinkSchema):
     length = ma.fields.Float(
         required=True
     )
-    source = ma.fields.Tuple(
-        (ma.fields.Float, ma.fields.Float),
-        required=True,
-    )
-    target = ma.fields.Tuple(
-        (ma.fields.Float, ma.fields.Float),
-        required=True,
-    )
 
 
-class InputSchema(ma.Schema):
+class SolverInputSchema(Schema):
     nodes = ma.fields.Nested(
-        InputNodes,
+        InputNodesSchema,
         required=True
     )
     links = ma.fields.List(
-        ma.fields.Nested(InputLink),
+        ma.fields.Nested(InputLinkSchema),
+        required=True
+    )
+
+
+class OutputProductionTechnologySchema(Schema):
+    flow_rate = ma.fields.Float(
+        required=True
+    )
+    power = ma.fields.Float(
+        required=True
+    )
+    t_supply = ma.fields.Float(
+        required=True
+    )
+    t_return = ma.fields.Float(
+        required=True
+    )
+
+
+class OutputProductionNodeSchema(NodeSchema):
+    technologies = ma.fields.Dict(
+        ma.fields.String(),
+        ma.fields.Nested(OutputProductionTechnologySchema),
+        required=True,
+    )
+    t_supply = ma.fields.Float(
+        required=True
+    )
+    t_return = ma.fields.Float(
+        required=True
+    )
+    pump_pressure = ma.fields.Float(
+        required=True
+    )
+    flow_rate = ma.fields.Float(
+        required=True
+    )
+
+
+class OutputConsumptionNodeSchema(NodeSchema):
+    flow_rate_before_exchanger = ma.fields.Float(
+        required=True
+    )
+    flow_rate_after_exchanger = ma.fields.Float(
+        required=True
+    )
+    flow_rate_in_exchanger = ma.fields.Float(
+        required=True
+    )
+    exchanger_power = ma.fields.Float(
+        required=True
+    )
+    exchanger_surface = ma.fields.Float(
+        required=True
+    )
+    exchanger_t_in = ma.fields.Float(
+        required=True
+    )
+    exchanger_t_out = ma.fields.Float(
+        required=True
+    )
+    exchanger_t_supply = ma.fields.Float(
+        required=True
+    )
+    exchanger_t_return = ma.fields.Float(
+        required=True
+    )
+    exchanger_DTLM = ma.fields.Float(
+        required=True
+    )
+    exchanger_delta_t_cold = ma.fields.Float(
+        required=True
+    )
+    exchanger_delta_t_hot = ma.fields.Float(
+        required=True
+    )
+
+
+class OutputNodesSchema(Schema):
+    production = ma.fields.List(
+        ma.fields.Nested(OutputProductionNodeSchema),
+        required=True
+    )
+    consumption = ma.fields.List(
+        ma.fields.Nested(OutputConsumptionNodeSchema),
+        required=True
+    )
+
+
+class OutputLinkSchema(LinkSchema):
+    diameter_int = ma.fields.Float(
+        required=True
+    )
+    diameter_out = ma.fields.Float(
+        required=True
+    )
+    flow_rate = ma.fields.Float(
+        required=True
+    )
+    speed = ma.fields.Float(
+        required=True
+    )
+    t_return_in = ma.fields.Float(
+        required=True
+    )
+    t_return_out = ma.fields.Float(
+        required=True
+    )
+    t_supply_in = ma.fields.Float(
+        required=True
+    )
+    t_supply_out = ma.fields.Float(
+        required=True
+    )
+
+
+class OutputGlobalIndicatorsSchema(Schema):
+    production_intallation_cost = ma.fields.Float(
+        required=True
+    )
+    exchangers_installation_cost = ma.fields.Float(
+        required=True
+    )
+    network_cost = ma.fields.Float(
+        required=True
+    )
+    trenches_cost = ma.fields.Float(
+        required=True
+    )
+    pipes_cost = ma.fields.Float(
+        required=True
+    )
+    network_length = ma.fields.Float(
+        required=True
+    )
+    heat_production_cost = ma.fields.Float(
+        required=True
+    )
+    pumps_operation_cost = ma.fields.Float(
+        required=True
+    )
+
+
+class OutputSolutionSchema(Schema):
+    global_indicators = ma.fields.Nested(
+        OutputGlobalIndicatorsSchema,
+        required=True
+    )
+    nodes = ma.fields.Nested(
+        OutputNodesSchema,
+        required=True
+    )
+    links = ma.fields.List(
+        ma.fields.Nested(OutputLinkSchema),
+        required=True
+    )
+
+
+class SolverOutputSchema(Schema):
+    solution = ma.fields.Nested(OutputSolutionSchema)
+    status = ma.fields.String(
+        required=True
+    )
+    success = ma.fields.Boolean(
+        required=True
+    )
+    termination_condition = ma.fields.String(
+        required=True
+    )
+
+
+class StatusSchema(Schema):
+    status = ma.fields.String(
+        required=True
+    )
+
+
+class TaskIdSchema(Schema):
+    task_id = ma.fields.UUID(
+        attribute='id',
         required=True
     )

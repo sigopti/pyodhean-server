@@ -1,10 +1,10 @@
 """Solver API Blueprint"""
 
-import json
 from flask_rest_api import Blueprint
 
 from pyodhean_server.task import solve
-from pyodhean_server.schemas import InputSchema
+from pyodhean_server.schemas import (
+    SolverInputSchema, SolverOutputSchema, TaskIdSchema, StatusSchema)
 
 
 blp = Blueprint(
@@ -12,19 +12,22 @@ blp = Blueprint(
 
 
 @blp.route('/tasks/', methods=['POST'])
-@blp.arguments(InputSchema)
+@blp.arguments(SolverInputSchema)
+@blp.response(TaskIdSchema)
 def enqueue(json_input):
     """Enqueue solver task"""
-    return solve.delay(json_input).id
+    return solve.delay(json_input)
 
 
 @blp.route('/tasks/<uuid:task_id>/status')
+@blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
-    return solve.AsyncResult(str(task_id)).status
+    return solve.AsyncResult(str(task_id))
 
 
 @blp.route('/tasks/<uuid:task_id>/result')
+@blp.response(SolverOutputSchema)
 def result(task_id):
     """Get solver task result"""
-    return json.dumps(solve.AsyncResult(str(task_id)).result)
+    return solve.AsyncResult(str(task_id)).result
