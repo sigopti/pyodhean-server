@@ -88,9 +88,9 @@ assert response.json == {}
 response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
 result = response.json
-result['status'] = 'ok'
-result['success'] = True
-result['termination_condition'] = 'optimal'
+assert result['status'] == 'ok'
+assert result['success'] is True
+assert result['termination_condition'] == 'optimal'
 assert 'solution' in result
 
 response = client.get('/solver/tasks/{}/result'.format(task_id))
