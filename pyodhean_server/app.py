@@ -3,7 +3,7 @@
 from flask import Flask
 from flask_rest_api import Api
 
-from pyodhean_server.solver import blp as solver_blp
+from pyodhean_server.solver.resources import blp as solver_blp
 from pyodhean_server.settings import DefaultConfig
 
 

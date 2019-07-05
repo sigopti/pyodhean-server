@@ -2,8 +2,8 @@
 
 from flask_rest_api import Blueprint
 
-from pyodhean_server.task import solve
-from pyodhean_server.schemas import (
+from .task import solve
+from .schemas import (
     SolverInputSchema, SolverOutputSchema, TaskIdSchema, StatusSchema)
 
 

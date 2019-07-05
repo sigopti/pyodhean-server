@@ -10,7 +10,7 @@ from pyodhean_server.settings import DefaultCeleryConfig
 
 app = Celery(
     'PyODHeaN Solver',
-    include=['pyodhean_server.task'],
+    include=['pyodhean_server.solver.task'],
 )
 app.config_from_object(DefaultCeleryConfig)
 

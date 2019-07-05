@@ -5,7 +5,7 @@ import time
 
 from pprint import pprint
 
-from pyodhean_server.task import solve
+from pyodhean_server.solver.task import solve
 
 
 json_input = {

@@ -1,7 +1,4 @@
-"""PyODHeaN server application schemas
-
-This module defines schema used to deserialize and validate API inputs
-"""
+"""Solver module schemas"""
 # pylint: disable=missing-docstring
 
 import marshmallow as ma
