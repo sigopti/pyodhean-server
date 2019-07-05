@@ -1,4 +1,4 @@
-"""Tesk PyODHeaN solver task"""
+"""Test PyODHeaN solver task"""
 # pylint: disable=invalid-name
 
 import time
