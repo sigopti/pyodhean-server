@@ -69,8 +69,6 @@ response = requests.get(args.host + '/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
 result = response.json()
 assert result['status'] == 'ok'
-assert result['success'] is True
-assert result['termination_condition'] == 'optimal'
 assert 'solution' in result
 
 # Display result

@@ -255,12 +255,6 @@ class SolverOutputSchema(Schema):
     status = ma.fields.String(
         required=True
     )
-    success = ma.fields.Boolean(
-        required=True
-    )
-    termination_condition = ma.fields.String(
-        required=True
-    )
 
 
 class StatusSchema(Schema):
