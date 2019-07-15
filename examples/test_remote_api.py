@@ -62,7 +62,7 @@ task_id = response.json()['task_id']
 
 while requests.get(
         args.host + '/solver/tasks/{}/status'.format(task_id)
-).json()['status'] == 'PENDING':
+).json()['status'] == 'pending':
     time.sleep(1)
 
 response = requests.get(args.host + '/solver/tasks/{}/result'.format(task_id))

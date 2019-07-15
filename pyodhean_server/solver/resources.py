@@ -23,7 +23,7 @@ def enqueue(json_input):
 @blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
-    return solve.AsyncResult(str(task_id))
+    return {'status': solve.AsyncResult(str(task_id)).status.lower()}
 
 
 @blp.route('/tasks/<uuid:task_id>/result')

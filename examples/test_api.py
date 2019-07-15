@@ -72,7 +72,7 @@ assert response.status_code == 200
 task_id = response.json['task_id']
 
 while client.get(
-        '/solver/tasks/{}/status'.format(task_id)).json['status'] == 'PENDING':
+        '/solver/tasks/{}/status'.format(task_id)).json['status'] == 'pending':
     time.sleep(1)
 
 # When using RabbitMQ as result backend (RPC backend), results are meant to be

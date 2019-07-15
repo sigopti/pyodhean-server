@@ -250,15 +250,23 @@ class OutputSolutionSchema(Schema):
     )
 
 
+SOLVER_STATUSES = ('ok', 'warning', 'error', 'aborted', 'unknown')
+
+
 class SolverOutputSchema(Schema):
     solution = ma.fields.Nested(OutputSolutionSchema)
     status = ma.fields.String(
+        validate=ma.validate.OneOf(SOLVER_STATUSES),
         required=True
     )
 
 
+TASK_STATES = ('pending', 'started', 'retry', 'failure', 'success')
+
+
 class StatusSchema(Schema):
     status = ma.fields.String(
+        validate=ma.validate.OneOf(TASK_STATES),
         required=True
     )
 
