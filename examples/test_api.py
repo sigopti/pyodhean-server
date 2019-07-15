@@ -71,6 +71,12 @@ assert response.status_code == 200
 
 task_id = response.json['task_id']
 
+# Result not available yet
+response = client.get('/solver/tasks/{}/result'.format(task_id))
+assert response.status_code == 404
+assert '/tasks/{}/status'.format(task_id) in response.json['message']
+
+# Check status until it's over
 while client.get(
         '/solver/tasks/{}/status'.format(task_id)).json['status'] == 'pending':
     time.sleep(1)
@@ -82,9 +88,9 @@ while client.get(
 # original task ID will fail on a second attempt.
 dummy_task_id = '00000000-0000-0000-0000-000000000000'
 response = client.get('/solver/tasks/{}/result'.format(dummy_task_id))
-assert response.status_code == 200
-assert response.json == {}
+assert response.status_code == 404
 
+# Result now available
 response = client.get('/solver/tasks/{}/result'.format(task_id))
 assert response.status_code == 200
 result = response.json

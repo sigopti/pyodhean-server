@@ -1,6 +1,6 @@
 """Solver API Blueprint"""
 
-from flask_rest_api import Blueprint
+from flask_rest_api import Blueprint, abort
 
 from .task import solve
 from .schemas import (
@@ -30,4 +30,12 @@ def status(task_id):
 @blp.response(SolverOutputSchema)
 def result(task_id):
     """Get solver task result"""
+    if solve.AsyncResult(str(task_id)).status != 'SUCCESS':
+        abort(
+            404,
+            message=(
+                'Task result unavailable because status is not "success". '
+                'Please check status first: /tasks/{}/status'.format(task_id)
+            )
+        )
     return solve.AsyncResult(str(task_id)).result
