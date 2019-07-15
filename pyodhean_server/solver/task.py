@@ -9,9 +9,19 @@ OPTIONS = {
 }
 
 
+SOLVER_STATUSES_MAPPING = {
+    'ok': 'ok',
+    'warning': 'no_solution_found',
+    'error': 'solver_error',
+    'aborted': 'solver_error',
+    'unknown': 'solver_error'
+}
+
+
 @app.task
 def solve(json_input):
     """Solve PyODHeaN model"""
     solver = JSONInterface(OPTIONS)
     json_output = solver.solve(json_input, tee=False, keepfiles=False)
+    json_output['status'] = SOLVER_STATUSES_MAPPING[json_output['status']]
     return json_output

@@ -3,6 +3,8 @@
 
 import marshmallow as ma
 
+from .task import SOLVER_STATUSES_MAPPING
+
 
 class Schema(ma.Schema):
     class Meta:
@@ -250,13 +252,10 @@ class OutputSolutionSchema(Schema):
     )
 
 
-SOLVER_STATUSES = ('ok', 'warning', 'error', 'aborted', 'unknown')
-
-
 class SolverOutputSchema(Schema):
     solution = ma.fields.Nested(OutputSolutionSchema)
     status = ma.fields.String(
-        validate=ma.validate.OneOf(SOLVER_STATUSES),
+        validate=ma.validate.OneOf(SOLVER_STATUSES_MAPPING.values()),
         required=True
     )
 
