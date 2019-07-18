@@ -23,8 +23,17 @@ def enqueue(json_input):
 @blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
-    status = solve.AsyncResult(str(task_id)).status
-    return {'status': CELERY_STATUSES_MAPPING[status]}
+    task_status = solve.AsyncResult(str(task_id)).status
+    if task_status == 'PENDING':
+        abort(
+            404,
+            message=(
+                'Unknown task ID: {}. '
+                'Either the task ID is wrong or the task was deleted.'
+                ''.format(task_id)
+            )
+        )
+    return {'status': CELERY_STATUSES_MAPPING[task_status]}
 
 
 @blp.route('/tasks/<uuid:task_id>/result')

@@ -9,13 +9,15 @@ OPTIONS = {
 }
 
 
+# Celery app sets status to SENT when a task is published.
+# A PENDING status means the task is unknown (wrong ID or deleted task)
+# We don't need PENDING in the mapping because the view returns 404 on PENDING
 CELERY_STATUSES_MAPPING = {
     'SENT': 'waiting',
     'RETRY': 'waiting',
     'STARTED': 'ongoing',
     'FAILURE': 'server_error',
     'SUCCESS': 'success',
-    'PENDING': 'unknown',
 }
 
 
