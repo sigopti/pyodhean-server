@@ -1,5 +1,7 @@
 """Solver API Blueprint"""
 
+from kombu.exceptions import OperationalError
+
 from flask_rest_api import Blueprint, abort
 
 from .task import solve, CELERY_STATUSES_MAPPING
@@ -16,7 +18,11 @@ blp = Blueprint(
 @blp.response(TaskIdSchema)
 def enqueue(json_input):
     """Enqueue solver task"""
-    return solve.delay(json_input)
+    try:
+        task = solve.delay(json_input)
+    except OperationalError:
+        abort(503)
+    return task
 
 
 @blp.route('/tasks/<uuid:task_id>/status')
