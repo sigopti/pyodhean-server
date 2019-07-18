@@ -17,6 +17,7 @@ CELERY_STATUSES_MAPPING = {
     'RETRY': 'waiting',
     'STARTED': 'ongoing',
     'FAILURE': 'server_error',
+    'REVOKED': 'server_error',
     'SUCCESS': 'success',
 }
 
