@@ -9,6 +9,16 @@ OPTIONS = {
 }
 
 
+CELERY_STATUSES_MAPPING = {
+    'SENT': 'waiting',
+    'RETRY': 'waiting',
+    'STARTED': 'ongoing',
+    'FAILURE': 'server_error',
+    'SUCCESS': 'success',
+    'PENDING': 'unknown',
+}
+
+
 SOLVER_STATUSES_MAPPING = {
     'ok': 'ok',
     'warning': 'no_solution_found',

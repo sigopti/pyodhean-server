@@ -77,8 +77,9 @@ assert response.status_code == 404
 assert '/tasks/{}/status'.format(task_id) in response.json['message']
 
 # Check status until it's over
+# Note: In real life, one would need to catch failures
 while client.get(
-        '/solver/tasks/{}/status'.format(task_id)).json['status'] == 'pending':
+        '/solver/tasks/{}/status'.format(task_id)).json['status'] != 'success':
     time.sleep(1)
 
 # When using RabbitMQ as result backend (RPC backend), results are meant to be

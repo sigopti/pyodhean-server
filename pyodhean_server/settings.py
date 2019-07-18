@@ -14,3 +14,4 @@ class DefaultCeleryConfig:
     """Default Celery configuration"""
     broker_url = 'redis://'
     result_backend = 'redis://'
+    task_track_started = True

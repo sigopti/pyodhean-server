@@ -2,7 +2,7 @@
 
 from flask_rest_api import Blueprint, abort
 
-from .task import solve
+from .task import solve, CELERY_STATUSES_MAPPING
 from .schemas import (
     SolverInputSchema, SolverOutputSchema, TaskIdSchema, StatusSchema)
 
@@ -23,7 +23,8 @@ def enqueue(json_input):
 @blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
-    return {'status': solve.AsyncResult(str(task_id)).status.lower()}
+    status = solve.AsyncResult(str(task_id)).status
+    return {'status': CELERY_STATUSES_MAPPING[status]}
 
 
 @blp.route('/tasks/<uuid:task_id>/result')

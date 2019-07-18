@@ -3,7 +3,7 @@
 
 import marshmallow as ma
 
-from .task import SOLVER_STATUSES_MAPPING
+from .task import CELERY_STATUSES_MAPPING, SOLVER_STATUSES_MAPPING
 
 
 class Schema(ma.Schema):
@@ -260,12 +260,9 @@ class SolverOutputSchema(Schema):
     )
 
 
-TASK_STATES = ('pending', 'started', 'retry', 'failure', 'success')
-
-
 class StatusSchema(Schema):
     status = ma.fields.String(
-        validate=ma.validate.OneOf(TASK_STATES),
+        validate=ma.validate.OneOf(CELERY_STATUSES_MAPPING.values()),
         required=True
     )
 
