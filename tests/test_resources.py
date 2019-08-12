@@ -29,6 +29,8 @@ class TestResources:
             '/solver/tasks/{}/status'.format(DUMMY_TASK_ID)
         )
         assert response.status_code == 404
+        assert 'Unknown task ID: {}.'.format(DUMMY_TASK_ID) in response.json[
+            'message']
 
     @pytest.mark.parametrize(
         'status',
@@ -43,3 +45,6 @@ class TestResources:
                 '/solver/tasks/{}/result'.format(DUMMY_TASK_ID)
             )
         assert response.status_code == 404
+        assert '/tasks/{}/status'.format(DUMMY_TASK_ID) in response.json[
+            'message']
+
