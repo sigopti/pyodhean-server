@@ -1,4 +1,4 @@
-"""Test PyODHeaN solver API"""
+"""PyODHeaN solver API example"""
 # pylint: disable=invalid-name
 
 import time
