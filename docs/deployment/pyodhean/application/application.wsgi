@@ -30,4 +30,5 @@ os.environ['FLASK_SETTINGS_FILE'] = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
 
 # Unleash the beast
-from pyodhean_server.app import app as application
+from pyodhean_server.app import create_app
+application = create_app()

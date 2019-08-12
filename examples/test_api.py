@@ -8,7 +8,7 @@ from pprint import pprint
 from werkzeug.utils import cached_property
 from flask import Response
 
-from pyodhean_server.app import app
+from pyodhean_server.app import create_app
 
 
 class JSONResponse(Response):
@@ -26,6 +26,7 @@ class JSONResponse(Response):
 DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
 
 
+app = create_app()
 app.response_class = JSONResponse
 
 json_input = {
