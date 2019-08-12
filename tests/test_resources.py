@@ -25,6 +25,15 @@ class TestResources:
         assert response.status_code == 503
 
     @pytest.mark.usefixtures('init_app')
+    def test_solve_link_without_node(self, json_input):
+        json_input['links'].append(
+            {'length': 10.0, 'source': [10.0, 10.0], 'target': [20.0, 20.0]})
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        assert '_schema' in response.json['errors']
+
+    @pytest.mark.usefixtures('init_app')
     def test_status_unknown_task(self):
         with mock.patch.object(
                 solve.backend, 'get_state', return_value='PENDING'

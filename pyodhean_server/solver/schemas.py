@@ -88,6 +88,22 @@ class InputLinkSchema(LinkSchema):
 
 
 class SolverInputSchema(Schema):
+
+    @ma.validates_schema
+    def validate_links_coordinates(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        """Check all links link to nodes"""
+        node_coords = (
+            set(p['id'] for p in data['nodes']['production']) |
+            set(c['id'] for c in data['nodes']['consumption'])
+        )
+        link_coords = (
+            set(l['source'] for l in data['links']) |
+            set(l['target'] for l in data['links'])
+        )
+        if link_coords - node_coords:
+            raise ma.ValidationError("Network contains links with no node")
+
     nodes = ma.fields.Nested(
         InputNodesSchema,
         required=True
