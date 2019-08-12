@@ -70,19 +70,9 @@ json_input = {
 
 client = app.test_client()
 
+# Send task to solver
 response = client.post('/solver/tasks/', data=json.dumps(json_input))
-assert response.status_code == 200
-
 task_id = response.json['task_id']
-
-# Task ID wrong or too old
-response = client.get('/solver/tasks/{}/status'.format(DUMMY_TASK_ID))
-assert response.status_code == 404
-
-# Result not available yet
-response = client.get('/solver/tasks/{}/result'.format(task_id))
-assert response.status_code == 404
-assert '/tasks/{}/status'.format(task_id) in response.json['message']
 
 # Check status until it's over
 while client.get(
@@ -90,24 +80,9 @@ while client.get(
 ).json['status'] in ('waiting', 'ongoing'):
     time.sleep(1)
 
-# When using RabbitMQ as result backend (RPC backend), results are meant to be
-# consumed only once (https://github.com/celery/celery/issues/5414).
-# In practice, the result may be lost if queried several times.
-# A reproducible case is when another task ID is queried. Then querying for
-# original task ID will fail on a second attempt.
-response = client.get('/solver/tasks/{}/result'.format(DUMMY_TASK_ID))
-assert response.status_code == 404
-
 # Result now available
 response = client.get('/solver/tasks/{}/result'.format(task_id))
-assert response.status_code == 200
 result = response.json
-assert result['status'] == 'ok'
-assert 'solution' in result
-
-response = client.get('/solver/tasks/{}/result'.format(task_id))
-assert response.status_code == 200
-assert response.json == result
 
 # Display result
 pprint(result)

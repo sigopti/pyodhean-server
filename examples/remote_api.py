@@ -54,22 +54,20 @@ json_input = {
 }
 
 
+# Send task to solver
 response = requests.post(
     args.host + '/solver/tasks/', data=json.dumps(json_input))
-assert response.status_code == 200
-
 task_id = response.json()['task_id']
 
+# Check status until it's over
 while requests.get(
         args.host + '/solver/tasks/{}/status'.format(task_id)
 ).json()['status'] in ('waiting', 'ongoing'):
     time.sleep(1)
 
+# Result now available
 response = requests.get(args.host + '/solver/tasks/{}/result'.format(task_id))
-assert response.status_code == 200
 result = response.json()
-assert result['status'] == 'ok'
-assert 'solution' in result
 
 # Display result
 pprint(result)
