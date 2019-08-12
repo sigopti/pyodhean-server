@@ -29,8 +29,8 @@ def enqueue(json_input):
 @blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
-    task_status = solve.AsyncResult(str(task_id)).status
-    if task_status == 'PENDING':
+    task_state = solve.backend.get_state(str(task_id))
+    if task_state == 'PENDING':
         abort(
             404,
             message=(
@@ -39,14 +39,15 @@ def status(task_id):
                 ''.format(task_id)
             )
         )
-    return {'status': CELERY_STATUSES_MAPPING[task_status]}
+    return {'status': CELERY_STATUSES_MAPPING[task_state]}
 
 
 @blp.route('/tasks/<uuid:task_id>/result')
 @blp.response(SolverOutputSchema)
 def result(task_id):
     """Get solver task result"""
-    if solve.AsyncResult(str(task_id)).status != 'SUCCESS':
+    task_state = solve.backend.get_state(str(task_id))
+    if task_state != 'SUCCESS':
         abort(
             404,
             message=(
