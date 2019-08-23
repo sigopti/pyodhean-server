@@ -9,7 +9,7 @@ from kombu.exceptions import OperationalError
 
 from pyodhean_server.solver.task import solve, CELERY_STATUSES_MAPPING
 
-from .utils import redis_running
+from .utils import celery_running, redis_running
 
 
 DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
@@ -59,7 +59,10 @@ class TestResources:
         assert '/tasks/{}/status'.format(DUMMY_TASK_ID) in response.json[
             'message']
 
-    @pytest.mark.skipif(not redis_running(), reason="This test requires Redis")
+    @pytest.mark.skipif(
+        not celery_running(), reason="This test requires Celery")
+    @pytest.mark.skipif(
+        not redis_running(), reason="This test requires Redis")
     @pytest.mark.usefixtures('init_app')
     def test_result_query_multiple_times(self, json_input):
         """Test result can be queried several times
