@@ -87,6 +87,23 @@ class InputLinkSchema(LinkSchema):
     )
 
 
+class InputParametersSchema(Schema):
+    speed_min = ma.fields.Float()
+    speed_max = ma.fields.Float()
+    diameter_int_min = ma.fields.Float()
+    diameter_int_max = ma.fields.Float()
+    operation_time = ma.fields.Float()
+    depreciation_period = ma.fields.Float()
+    discout_rate = ma.fields.Float()
+    trench_unit_cost = ma.fields.Float()
+    pipe_diameter_unit_cost_slope = ma.fields.Float()
+    pipe_diameter_unit_cost_y_intercept = ma.fields.Float()
+    exchanger_power_cost_slope = ma.fields.Float()
+    exchanger_power_cost_y_intercept = ma.fields.Float()
+    pump_energy_unit_cost = ma.fields.Float()
+    pump_energy_cost_inflation_rate = ma.fields.Float()
+
+
 class SolverInputSchema(Schema):
 
     @ma.validates_schema
@@ -112,6 +129,7 @@ class SolverInputSchema(Schema):
         ma.fields.Nested(InputLinkSchema),
         required=True
     )
+    parameters = ma.fields.Nested(InputParametersSchema)
 
 
 class OutputProductionTechnologySchema(Schema):

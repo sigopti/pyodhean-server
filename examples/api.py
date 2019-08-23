@@ -65,7 +65,11 @@ json_input = {
         {'length': 10.0, 'source': [0.0, 0.0], 'target': [2.0, 5.0]},
         # C1 -> C2
         {'length': 100.0, 'source': [2.0, 5.0], 'target': [30.0, 50.0]},
-    ]
+    ],
+    'parameters': {
+        'diameter_int_min': 0.10,
+        'speed_max': 2,
+    },
 }
 
 client = app.test_client()
