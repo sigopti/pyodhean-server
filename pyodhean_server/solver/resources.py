@@ -1,5 +1,6 @@
 """Solver API Blueprint"""
 
+from flask import current_app
 from kombu.exceptions import OperationalError
 
 from flask_rest_api import Blueprint, abort
@@ -21,7 +22,9 @@ def enqueue(json_input):
     try:
         task = solve.delay(json_input)
     except OperationalError:
+        current_app.logger.error("Can't queue task. Check Redis is running.")
         abort(503)
+    current_app.logger.info("Task %(task_id)s enqueued.", {'task_id': task.id})
     return task
 
 

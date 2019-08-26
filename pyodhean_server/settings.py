@@ -8,6 +8,12 @@ class DefaultConfig:
     OPENAPI_URL_PREFIX = '/'
     OPENAPI_REDOC_PATH = '/'
     OPENAPI_REDOC_VERSION = 'next'
+    LOGGER_LEVEL = 'WARNING'
+    LOGGER_BACKUP = 30
+    LOGGER_FORMAT = (
+        '%(asctime)s | %(levelname)-8s | '
+        '%(remote_addr)-15s | %(method)-7s | %(url)s | %(message)s'
+    )
 
 
 class DefaultCeleryConfig:
