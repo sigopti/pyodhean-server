@@ -4,4 +4,4 @@ disable=too-few-public-methods
 
 [BASIC]
 
-good-names=app,api,blp
+good-names=app,api,blp,logger

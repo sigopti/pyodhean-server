@@ -1,6 +1,11 @@
 """PyODHeaN solver task"""
+from celery.utils.log import get_task_logger
+
 from pyodhean.interface import JSONInterface
 from pyodhean_server.celery import app
+
+
+logger = get_task_logger(__name__)
 
 
 # options [cf https://www.coin-or.org/Ipopt/documentation/node42.html]
@@ -35,6 +40,14 @@ SOLVER_STATUSES_MAPPING = {
 def solve(json_input):
     """Solve PyODHeaN model"""
     solver = JSONInterface(OPTIONS)
+    logger.info('Starting solver')
     json_output = solver.solve(json_input, tee=False, keepfiles=False)
-    json_output['status'] = SOLVER_STATUSES_MAPPING[json_output['status']]
+    status = json_output['status']
+    if status in ('error', 'aborted', 'unknown'):
+        logger.error(
+            'Solver failed with status %(status)s', {'status': status})
+    else:
+        logger.info(
+            'Solver succeeded with status %(status)s', {'status': status})
+    json_output['status'] = SOLVER_STATUSES_MAPPING[status]
     return json_output
