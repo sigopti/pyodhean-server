@@ -12,19 +12,22 @@ class Schema(ma.Schema):
 
 
 class NodeSchema(Schema):
-    id = ma.fields.Tuple(
-        (ma.fields.Float, ma.fields.Float),
+    id = ma.fields.List(
+        ma.fields.Float,
+        validate=ma.validate.Length(min=2, max=2),
         required=True,
     )
 
 
 class LinkSchema(Schema):
-    source = ma.fields.Tuple(
-        (ma.fields.Float, ma.fields.Float),
+    source = ma.fields.List(
+        ma.fields.Float,
+        validate=ma.validate.Length(min=2, max=2),
         required=True,
     )
-    target = ma.fields.Tuple(
-        (ma.fields.Float, ma.fields.Float),
+    target = ma.fields.List(
+        ma.fields.Float,
+        validate=ma.validate.Length(min=2, max=2),
         required=True,
     )
 
@@ -111,12 +114,12 @@ class SolverInputSchema(Schema):
         # pylint: disable=unused-argument,no-self-use
         """Check all links link to nodes"""
         node_coords = (
-            set(p['id'] for p in data['nodes']['production']) |
-            set(c['id'] for c in data['nodes']['consumption'])
+            set(tuple(p['id']) for p in data['nodes']['production']) |
+            set(tuple(c['id']) for c in data['nodes']['consumption'])
         )
         link_coords = (
-            set(l['source'] for l in data['links']) |
-            set(l['target'] for l in data['links'])
+            set(tuple(l['source']) for l in data['links']) |
+            set(tuple(l['target']) for l in data['links'])
         )
         if link_coords - node_coords:
             raise ma.ValidationError("Network contains links with no node")
