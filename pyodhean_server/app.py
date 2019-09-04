@@ -20,4 +20,6 @@ def create_app():
     api = Api(app)
     api.register_blueprint(solver_blp)
 
+    app.logger.info("Pyodhean server started. Ready to rock.")
+
     return app
