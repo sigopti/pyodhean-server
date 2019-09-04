@@ -30,7 +30,7 @@ def init_app(app):
     """Initialize application logger"""
 
     # Use default config in DEBUG mode, configure logger otherwise
-    if not app.debug:
+    if not app.debug and app.config['LOGGER_ENABLED']:
 
         log_level = app.config['LOGGER_LEVEL']
         log_dir = Path(app.config['LOGGER_DIR'])

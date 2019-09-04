@@ -8,6 +8,7 @@ class DefaultConfig:
     OPENAPI_URL_PREFIX = '/'
     OPENAPI_REDOC_PATH = '/'
     OPENAPI_REDOC_VERSION = 'next'
+    LOGGER_ENABLED = False
     LOGGER_LEVEL = 'WARNING'
     LOGGER_BACKUP = 30
     LOGGER_FORMAT = (
