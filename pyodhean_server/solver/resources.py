@@ -3,7 +3,7 @@
 from flask import current_app
 from kombu.exceptions import OperationalError
 
-from flask_rest_api import Blueprint, abort
+from flask_smorest import Blueprint, abort
 
 from .task import solve, CELERY_STATUSES_MAPPING
 from .schemas import (

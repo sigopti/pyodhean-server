@@ -43,7 +43,7 @@ setup(
         'celery[redis]>=4.2.0,<5.0',
         'flask>=1.0.0',
         'python-dotenv>=0.9.0',
-        'flask-rest-api>=0.16.0,<0.17',
+        'flask-smorest>=0.18.0,<0.19',
         'marshmallow>=3.0.0rc5',
     ],
 )
