@@ -64,6 +64,19 @@ class InputProductionTechnologySchema(Schema):
 
 
 class InputProductionNodeSchema(NodeSchema):
+
+    @ma.validates_schema
+    def validate_coverage_rates(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        if sum(
+                t.get('coverage_rate', 0)
+                for t in data['technologies'].values()
+        ) > 1:
+            raise ma.ValidationError(
+                "Total coverage rate for a production unit "
+                "must be lower than 1."
+            )
+
     technologies = ma.fields.Dict(
         ma.fields.String(),
         ma.fields.Nested(InputProductionTechnologySchema),

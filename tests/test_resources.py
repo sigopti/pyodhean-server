@@ -73,6 +73,19 @@ class TestResources:
         ) in errors
 
     @pytest.mark.usefixtures('init_app')
+    def test_solve_wrong_total_coverage_rate(self, json_input):
+        p_1 = json_input['nodes']['production'][0]
+        p_1['technologies']['k1']['coverage_rate'] = 0.9
+        p_1['technologies']['k2']['coverage_rate'] = 0.5
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        errors = response.json['errors']['nodes']['production']['0']['_schema']
+        assert (
+            'Total coverage rate for a production unit must be lower than 1.'
+        ) in errors
+
+    @pytest.mark.usefixtures('init_app')
     def test_solve_link_without_node(self, json_input):
         json_input['links'].append(
             {'length': 10.0, 'source': [10.0, 10.0], 'target': [20.0, 20.0]})
