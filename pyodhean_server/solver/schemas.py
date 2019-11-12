@@ -51,6 +51,9 @@ class InputProductionTechnologySchema(Schema):
     energy_cost_inflation_rate = ma.fields.Float(
         required=True,
     )
+    coverage_rate = ma.fields.Float(
+        validate=ma.validate.Range(min=0, max=1),
+    )
 
 
 class InputProductionNodeSchema(NodeSchema):
