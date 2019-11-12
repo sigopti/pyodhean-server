@@ -44,6 +44,6 @@ setup(
         'flask>=1.0.0',
         'python-dotenv>=0.9.0',
         'flask-smorest>=0.18.0,<0.19',
-        'marshmallow>=3.0.0rc5',
+        'marshmallow>=3.0.0',
     ],
 )
