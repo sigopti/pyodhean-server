@@ -3,15 +3,12 @@ import pytest
 
 from pyodhean_server.app import create_app
 
-from .utils import JSONResponse
-
 
 @pytest.fixture
 def init_app(request):
     """Initialize test application"""
     request.cls.app = create_app()
     request.cls.app.config['TESTING'] = True
-    request.cls.app.response_class = JSONResponse
     request.cls.client = request.cls.app.test_client()
 
 

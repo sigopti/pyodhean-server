@@ -5,29 +5,13 @@ import time
 import json
 from pprint import pprint
 
-from werkzeug.utils import cached_property
-from flask import Response
-
 from pyodhean_server.app import create_app
-
-
-class JSONResponse(Response):
-    # pylint: disable=too-many-ancestors
-    """
-    A Response class with extra useful helpers, i.e. ``.json`` property.
-
-    Taken from https://github.com/frol/flask-restplus-server-example/
-    """
-    @cached_property
-    def json(self):
-        return json.loads(self.get_data(as_text=True))
 
 
 DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
 
 
 app = create_app()
-app.response_class = JSONResponse
 
 json_input = {
     'nodes': {
