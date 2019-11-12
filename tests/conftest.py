@@ -63,5 +63,6 @@ def json_input():
         'parameters': {
             'diameter_int_min': 0.10,
             'speed_max': 2.5,
+            'simultaneity_ratio': 0.70,
         },
     }

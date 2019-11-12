@@ -106,8 +106,8 @@ class InputParametersSchema(Schema):
     pipe_diameter_unit_cost_y_intercept = ma.fields.Float()
     exchanger_power_cost_slope = ma.fields.Float()
     exchanger_power_cost_y_intercept = ma.fields.Float()
-    pump_energy_unit_cost = ma.fields.Float()
-    pump_energy_cost_inflation_rate = ma.fields.Float()
+    pump_energy_ratio_cost = ma.fields.Float()
+    simultaneity_ratio = ma.fields.Float()
 
 
 class SolverInputSchema(Schema):
