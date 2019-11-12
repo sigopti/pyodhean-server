@@ -25,13 +25,62 @@ class TestResources:
         assert response.status_code == 503
 
     @pytest.mark.usefixtures('init_app')
+    def test_solve_wrong_t_in_min_t_out_max(self, json_input):
+        p1k1 = json_input['nodes']['production'][0]['technologies']['k1']
+        p1k1['t_in_min'] = 90
+        p1k1['t_out_max'] = 80
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        errors = response.json['errors']['nodes']['production']['0'][
+            'technologies']['k1']['value']['_schema']
+        assert 't_in_min must be lower than t_out_max.' in errors
+
+    @pytest.mark.usefixtures('init_app')
+    def test_solve_wrong_t_in_t_out(self, json_input):
+        c_1 = json_input['nodes']['consumption'][0]
+        c_1['t_in'] = 90
+        c_1['t_out'] = 80
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        errors = response.json['errors']['nodes']['consumption']['0'][
+            '_schema']
+        assert 't_in must be lower than t_out.' in errors
+
+    @pytest.mark.usefixtures('init_app')
+    def test_solve_wrong_speed_min_speed_max(self, json_input):
+        params = json_input['parameters']
+        params['speed_min'] = 90
+        params['speed_max'] = 80
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        errors = response.json['errors']['parameters']['_schema']
+        assert 'speed_min must be lower than speed_max.' in errors
+
+    @pytest.mark.usefixtures('init_app')
+    def test_solve_wrong_diameter_int_min_diameter_int_max(self, json_input):
+        params = json_input['parameters']
+        params['diameter_int_min'] = 90
+        params['diameter_int_max'] = 80
+        response = self.client.post(
+            '/solver/tasks/', data=json.dumps(json_input))
+        assert response.status_code == 422
+        errors = response.json['errors']['parameters']['_schema']
+        assert (
+            'diameter_int_min must be lower than diameter_int_max.'
+        ) in errors
+
+    @pytest.mark.usefixtures('init_app')
     def test_solve_link_without_node(self, json_input):
         json_input['links'].append(
             {'length': 10.0, 'source': [10.0, 10.0], 'target': [20.0, 20.0]})
         response = self.client.post(
             '/solver/tasks/', data=json.dumps(json_input))
         assert response.status_code == 422
-        assert '_schema' in response.json['errors']
+        errors = response.json['errors']['_schema']
+        assert 'Network contains links with no node.' in errors
 
     @pytest.mark.usefixtures('init_app')
     def test_status_unknown_task(self):

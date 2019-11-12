@@ -33,6 +33,13 @@ class LinkSchema(Schema):
 
 
 class InputProductionTechnologySchema(Schema):
+
+    @ma.validates_schema
+    def validate_t_in_min_t_out_max(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        if data['t_in_min'] > data['t_out_max']:
+            raise ma.ValidationError("t_in_min must be lower than t_out_max.")
+
     efficiency = ma.fields.Float(
         required=True,
     )
@@ -65,6 +72,13 @@ class InputProductionNodeSchema(NodeSchema):
 
 
 class InputConsumptionNodeSchema(NodeSchema):
+
+    @ma.validates_schema
+    def validate_t_in_t_out(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        if data['t_in'] > data['t_out']:
+            raise ma.ValidationError("t_in must be lower than t_out.")
+
     kW = ma.fields.Float(
         required=True
     )
@@ -94,6 +108,28 @@ class InputLinkSchema(LinkSchema):
 
 
 class InputParametersSchema(Schema):
+
+    @ma.validates_schema
+    def validate_speed_min_speed_max(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        if (
+                'speed_min' in data and
+                'speed_max' in data and
+                data['speed_min'] > data['speed_max']
+        ):
+            raise ma.ValidationError("speed_min must be lower than speed_max.")
+
+    @ma.validates_schema
+    def validate_diameter_int_min_diameter_int_max(self, data, **kwargs):
+        # pylint: disable=unused-argument,no-self-use
+        if (
+                'diameter_int_min' in data and
+                'diameter_int_max' in data and
+                data['diameter_int_min'] > data['diameter_int_max']
+        ):
+            raise ma.ValidationError(
+                "diameter_int_min must be lower than diameter_int_max.")
+
     speed_min = ma.fields.Float(
         validate=ma.validate.Range(min=0),
     )
@@ -145,7 +181,7 @@ class SolverInputSchema(Schema):
             set(tuple(l['target']) for l in data['links'])
         )
         if link_coords - node_coords:
-            raise ma.ValidationError("Network contains links with no node")
+            raise ma.ValidationError("Network contains links with no node.")
 
     nodes = ma.fields.Nested(
         InputNodesSchema,
