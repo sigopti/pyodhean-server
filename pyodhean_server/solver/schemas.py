@@ -177,6 +177,9 @@ class InputParametersSchema(Schema):
     simultaneity_ratio = ma.fields.Float(
         validate=ma.validate.Range(min=0, max=1),
     )
+    heat_loss_rate = ma.fields.Float(
+        validate=ma.validate.Range(min=0, max=1),
+    )
 
 
 class SolverInputSchema(Schema):

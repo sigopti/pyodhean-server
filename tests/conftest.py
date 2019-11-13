@@ -64,5 +64,6 @@ def json_input():
             'diameter_int_min': 0.10,
             'speed_max': 2.5,
             'simultaneity_ratio': 0.70,
+            'heat_loss_rate': 0.10,
         },
     }
