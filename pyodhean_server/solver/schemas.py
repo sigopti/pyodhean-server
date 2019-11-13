@@ -42,6 +42,7 @@ class InputProductionTechnologySchema(Schema):
 
     efficiency = ma.fields.Float(
         required=True,
+        validate=ma.validate.Range(min=0),
     )
     t_out_max = ma.fields.Float(
         required=True,
@@ -51,9 +52,11 @@ class InputProductionTechnologySchema(Schema):
     )
     production_unitary_cost = ma.fields.Float(
         required=True,
+        validate=ma.validate.Range(min=0),
     )
     energy_unitary_cost = ma.fields.Float(
         required=True,
+        validate=ma.validate.Range(min=0),
     )
     energy_cost_inflation_rate = ma.fields.Float(
         required=True,
