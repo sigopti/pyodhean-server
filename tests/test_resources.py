@@ -49,17 +49,6 @@ class TestResources:
         assert 't_in must be lower than t_out.' in errors
 
     @pytest.mark.usefixtures('init_app')
-    def test_solve_wrong_speed_min_speed_max(self, json_input):
-        params = json_input['parameters']
-        params['speed_min'] = 90
-        params['speed_max'] = 80
-        response = self.client.post(
-            '/solver/tasks/', data=json.dumps(json_input))
-        assert response.status_code == 422
-        errors = response.json['errors']['parameters']['_schema']
-        assert 'speed_min must be lower than speed_max.' in errors
-
-    @pytest.mark.usefixtures('init_app')
     def test_solve_wrong_diameter_int_min_diameter_int_max(self, json_input):
         params = json_input['parameters']
         params['diameter_int_min'] = 90

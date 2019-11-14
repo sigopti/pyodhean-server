@@ -126,16 +126,6 @@ class InputLinkSchema(LinkSchema):
 class InputParametersSchema(Schema):
 
     @ma.validates_schema
-    def validate_speed_min_speed_max(self, data, **kwargs):
-        # pylint: disable=unused-argument,no-self-use
-        if (
-                'speed_min' in data and
-                'speed_max' in data and
-                data['speed_min'] > data['speed_max']
-        ):
-            raise ma.ValidationError("speed_min must be lower than speed_max.")
-
-    @ma.validates_schema
     def validate_diameter_int_min_diameter_int_max(self, data, **kwargs):
         # pylint: disable=unused-argument,no-self-use
         if (
@@ -146,9 +136,6 @@ class InputParametersSchema(Schema):
             raise ma.ValidationError(
                 "diameter_int_min must be lower than diameter_int_max.")
 
-    speed_min = ma.fields.Float(
-        validate=ma.validate.Range(min=0),
-    )
     speed_max = ma.fields.Float(
         validate=ma.validate.Range(min=0),
     )
