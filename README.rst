@@ -39,6 +39,11 @@ Add it to the PATH ::
     export PATH=$PATH:/path/to/ipopt/bin/
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/ipopt/lib/
 
+Check ipopt runs correctly ::
+
+    ldd `which ipopt`
+    ipopt
+
 Launch solver server
 --------------------
 
