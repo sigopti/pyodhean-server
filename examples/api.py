@@ -60,7 +60,7 @@ json_input = {
         {'length': 100.0, 'source': [2.0, 5.0], 'target': [30.0, 50.0]},
     ],
     'parameters': {
-        'diameter_int_min': 0.10,
+        'diameter_int_max': 0.20,
         'speed_max': 2.5,
     },
 }

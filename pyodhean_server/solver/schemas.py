@@ -125,21 +125,7 @@ class InputLinkSchema(LinkSchema):
 
 class InputParametersSchema(Schema):
 
-    @ma.validates_schema
-    def validate_diameter_int_min_diameter_int_max(self, data, **kwargs):
-        # pylint: disable=unused-argument,no-self-use
-        if (
-                'diameter_int_min' in data and
-                'diameter_int_max' in data and
-                data['diameter_int_min'] > data['diameter_int_max']
-        ):
-            raise ma.ValidationError(
-                "diameter_int_min must be lower than diameter_int_max.")
-
     speed_max = ma.fields.Float(
-        validate=ma.validate.Range(min=0),
-    )
-    diameter_int_min = ma.fields.Float(
         validate=ma.validate.Range(min=0),
     )
     diameter_int_max = ma.fields.Float(
