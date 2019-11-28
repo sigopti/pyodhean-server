@@ -8,9 +8,10 @@ from pyodhean_server.celery import app
 logger = get_task_logger(__name__)
 
 
-# options [cf https://www.coin-or.org/Ipopt/documentation/node42.html]
+# See "Options available via the AMPL Interface" in IPOPT documentation.
+# https://www.coin-or.org/Ipopt/documentation/node63.html
 OPTIONS = {
-    'tol': 1e-3,           # defaut: 1e-8
+    'tol': 1e-3,
 }
 
 
