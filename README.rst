@@ -7,47 +7,63 @@ Optimization of District Heating Networks
 This package provides the solver server.
 
 
-Install
-=======
-
-::
-
-    pip install pyodhean-server
-
-pyodhean-server supports Python >= 3.5.
-
-
-Run server for development
-==========================
+Installation
+============
 
 Install redis
 -------------
 
 It should be available from the package manager in most Linux distributions.
 
+::
+
+   aptitude install redis
+
 Install ipopt
 -------------
 
-Get ipopt tarball from https://github.com/JuliaOpt/IpoptBuilder/releases
+Install dependencies::
 
-Extract it ::
+   aptitude install make g++ gfortran pkgconf liblapack-dev
 
-    tar -xvzf IpoptBuilder.xxx.tar.gz
+Use coinbrew to fetch and compile Ipopt and dependencies::
 
-Add it to the PATH ::
+    # Run as unprivileged user
+    git clone --depth=1 https://github.com/coin-or/coinbrew
+    cd coinbrew
+    ./coinbrew Ipopt:releases/3.13.0 fetch
+    ./coinbrew build Ipopt
 
-    export PATH=$PATH:/path/to/ipopt/bin/
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/ipopt/lib/
+Copy files to project directory::
 
-Check ipopt runs correctly ::
+    cp -r ./coinbrew/dist /path/to/project/ipopt
 
-    ldd `which ipopt`
-    ipopt
+Install pyodhean
+----------------
+
+Use pip::
+
+    pip install pyodhean-server
+
+pyodhean-server supports Python >= 3.5.
+
+
+Development configuration
+=========================
 
 Launch solver server
 --------------------
 
-::
+Add path to ipopt to the PATH (should be added to .bashrc)::
+
+    export PATH=$PATH:/path/to/project/ipopt/bin/
+
+Check ipopt is correctly installed::
+
+    ldd `which ipopt`
+    ipopt -v
+
+Launch worker::
 
     celery -A pyodhean_server.celery worker
 
@@ -66,34 +82,8 @@ Configure and launch web API server
     flask run
 
 
-Run server for production
-=========================
-
-Install redis
--------------
-
-It should be available from the package manager in most Linux distributions.
-
-Install ipopt
--------------
-
-Get ipopt tarball from https://github.com/JuliaOpt/IpoptBuilder/releases
-
-Extract it ::
-
-    tar -xvzf IpoptBuilder.xxx.tar.gz
-
-Configure and launch solver service
------------------------------------
-
-Copy systemd and logrotate.d directories from docs/deployment/etc into /etc.
-
-Customize pyodhean-celery.conf
-
-Start the service and enable it for automatic start on system startup ::
-
-    systemctrl start pyodhean-celery
-    systemctrl enable pyodhean-celery
+Production configuration
+========================
 
 Configure and launch web API server
 -----------------------------------
@@ -144,3 +134,28 @@ Edit /etc/apache2/sites-available/pyodhean.conf.
 Reload apache2.
 
 The API should be available as https://domain.tld/api/v0/.
+
+Configure and launch solver service
+-----------------------------------
+
+Create pyodhean user::
+
+   adduser --system --no-create-home --group pyodhean
+
+Create directories to store logs and PIDs::
+
+    mkdir /var/log/pyodhean-celery
+    chmod pyodhean:pyodhean /var/log/pyodhean-celery
+    mkdir /var/run/pyodhean-celery
+    chmod pyodhean:pyodhean /var/run/pyodhean-celery
+
+Copy systemd and logrotate.d directories from docs/deployment/etc into /etc.
+
+Edit pyodhean-celery configuration file to specify the paths.
+
+   /etc/systemd/system/pyodhean-celery.service.d/pyodhean-celery.conf
+
+Start the service and enable it for automatic start on system startup ::
+
+    systemctrl enable pyodhean-celery
+    systemctrl start pyodhean-celery

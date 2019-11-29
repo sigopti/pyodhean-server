@@ -22,9 +22,6 @@ PATH = os.path.dirname(__file__)
 if PATH not in sys.path:
     sys.path.append(PATH)
 
-# Set environment variable to indicate production mode
-os.environ['FLASK_CONFIG'] = 'production'
-
 # Provide path to custom settings file
 os.environ['FLASK_SETTINGS_FILE'] = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
