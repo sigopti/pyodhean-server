@@ -17,19 +17,22 @@ setup(
     version='0.0',
     description='Optimization of District Heating Networks',
     long_description=long_description,
-    # url='https://github.com/Nobatek/pyodhean-server',
-    author='Nobatek',
+    url='https://github.com/sigopti/pyodhean-server',
+    author='Nobatek/INEF4',
     author_email='jlafrechoux@nobatek.com',
-    # license='To be defined',
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Scientific/Engineering',
-        # 'License :: ,
+        (
+            'License :: OSI Approved :: '
+            'GNU Affero General Public License v3 or later (AGPLv3+)'
+        ),
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     keywords=[
         'District',
