@@ -40,7 +40,7 @@ def init_app(app):
         app.logger.removeHandler(default_handler)
 
         # Use WatchedFileHandler to open an logrotate rotate the log file
-        file_handler = WatchedFileHandler(str(log_dir / 'pyodhean.log'))
+        file_handler = WatchedFileHandler(log_dir / 'pyodhean.log')
         file_handler.suffix = '%Y-%m-%d'
         file_handler.extMatch = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 

@@ -20,6 +20,12 @@ setup(
     url='https://github.com/sigopti/pyodhean-server',
     author='Nobatek/INEF4',
     author_email='jlafrechoux@nobatek.com',
+    keywords=[
+        'District',
+        'Heating',
+        'Network',
+        'Optimization',
+    ],
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -29,18 +35,11 @@ setup(
             'License :: OSI Approved :: '
             'GNU Affero General Public License v3 or later (AGPLv3+)'
         ),
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    keywords=[
-        'District',
-        'Heating',
-        'Network',
-        'Optimization',
-    ],
-    packages=find_packages(),
+    python_requires=">=3.6",
     install_requires=[
         'pyodhean',
         'celery[redis]>=4.2.0,<5.0',
@@ -50,4 +49,5 @@ setup(
         'flask-smorest>=0.18.0,<0.19',
         'marshmallow>=3.0.0',
     ],
+    packages=find_packages(),
 )
