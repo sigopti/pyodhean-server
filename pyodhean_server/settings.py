@@ -10,7 +10,6 @@ class DefaultConfig:
     OPENAPI_REDOC_VERSION = 'next'
     LOGGER_ENABLED = False
     LOGGER_LEVEL = 'WARNING'
-    LOGGER_BACKUP = 30
     LOGGER_FORMAT = (
         '%(asctime)s | %(levelname)-8s | '
         '%(remote_addr)-15s | %(method)-7s | %(url)s | %(message)s'

@@ -111,7 +111,7 @@ Copy files from docs/deployment/pyodhean into the pyodhean directory.
 Customize them if needed. At least the path to the virtual environment must be
 specified.
 
-Make sure settings.conf can be read by apache user and is not world readable::
+Make sure settings.conf can be read by apache user::
 
     chown root:www-data application/settings.conf
     chmod 640 application/settings.conf
@@ -135,6 +135,11 @@ Reload apache2.
 
 The API should be available as https://domain.tld/api/v0/.
 
+Create directories to store log files::
+
+    mkdir /var/log/pyodhean
+    chmod pyodhean:pyodhean /var/log/pyodhean
+
 Configure and launch solver service
 -----------------------------------
 
@@ -149,7 +154,7 @@ Create directories to store logs and PIDs::
     mkdir /var/run/pyodhean-celery
     chmod pyodhean:pyodhean /var/run/pyodhean-celery
 
-Copy systemd and logrotate.d directories from docs/deployment/etc into /etc.
+Copy systemd directory from docs/deployment/etc into /etc.
 
 Edit pyodhean-celery configuration file to specify the paths.
 
@@ -159,3 +164,8 @@ Start the service and enable it for automatic start on system startup ::
 
     systemctrl enable pyodhean-celery
     systemctrl start pyodhean-celery
+
+Configure file log rotation
+---------------------------
+
+Copy logrotate.d directory from docs/deployment/etc into /etc.

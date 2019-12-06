@@ -4,7 +4,7 @@ import time
 import re
 from pathlib import Path
 import logging
-from logging.handlers import TimedRotatingFileHandler
+from logging.handlers import WatchedFileHandler
 from flask import request
 from flask.logging import default_handler
 
@@ -34,18 +34,13 @@ def init_app(app):
 
         log_level = app.config['LOGGER_LEVEL']
         log_dir = Path(app.config['LOGGER_DIR'])
-        log_backup_count = app.config['LOGGER_BACKUP']
         log_format = app.config['LOGGER_FORMAT']
 
         # Remove Flask default handler
         app.logger.removeHandler(default_handler)
 
-        # Create a daily rotated log file handler
-        file_handler = TimedRotatingFileHandler(
-            str(log_dir / 'pyodhean.log'),
-            when='midnight',
-            backupCount=log_backup_count,
-            utc=True)
+        # Use WatchedFileHandler to open an logrotate rotate the log file
+        file_handler = WatchedFileHandler(str(log_dir / 'pyodhean.log'))
         file_handler.suffix = '%Y-%m-%d'
         file_handler.extMatch = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 
