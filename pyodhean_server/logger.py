@@ -1,7 +1,6 @@
 """Application logger"""
 
 import time
-import re
 from pathlib import Path
 import logging
 from logging.handlers import WatchedFileHandler
@@ -41,8 +40,6 @@ def init_app(app):
 
         # Use WatchedFileHandler to open an logrotate rotate the log file
         file_handler = WatchedFileHandler(log_dir / 'pyodhean.log')
-        file_handler.suffix = '%Y-%m-%d'
-        file_handler.extMatch = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 
         # Create record formatter
         formatter = RequestFormatter(log_format)
