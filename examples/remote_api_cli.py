@@ -1,7 +1,6 @@
 """Remote PyODHeaN solver API example with problem defined in a .json file"""
 # pylint: disable=invalid-name
 
-import sys
 import time
 import json
 import argparse
@@ -15,19 +14,18 @@ parser = argparse.ArgumentParser(description='Test PyODHeaN API.')
 parser.add_argument(
     '--url', dest='host', required=True, help='API host URL')
 parser.add_argument(
-    '-i', dest='input_file', required=True, help='Input JSON file'
+    '-i',
+    dest='input_file',
+    required=True,
+    type=argparse.FileType('r'),
+    help='Input JSON file',
 )
 parser.add_argument('--user', dest='user', help='Username')
 parser.add_argument('--password', dest='password', help='Password')
 
 args = parser.parse_args()
 
-try:
-    with open(args.input_file) as f:
-        json_input = json.load(f)
-except IOError as e:
-    print('Input file error: {}'.format(e))
-    sys.exit()
+json_input = json.load(args.input_file)
 
 headers = {}
 
