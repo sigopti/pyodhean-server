@@ -7,6 +7,7 @@ from kombu.exceptions import OperationalError
 
 from flask_smorest import Blueprint, abort
 
+from pyodhean_server.auth import auth
 from .task import solve, CELERY_STATUSES_MAPPING
 from .schemas import (
     SolverInputSchema, SolverOutputSchema, TaskIdSchema, StatusSchema)
@@ -17,6 +18,7 @@ blp = Blueprint(
 
 
 @blp.route('/tasks/', methods=['POST'])
+@auth.login_required
 @blp.arguments(SolverInputSchema)
 @blp.response(TaskIdSchema)
 def enqueue(json_input):
@@ -32,6 +34,7 @@ def enqueue(json_input):
 
 
 @blp.route('/tasks/<uuid:task_id>/status')
+@auth.login_required
 @blp.response(StatusSchema)
 def status(task_id):
     """Get solver task status"""
@@ -49,6 +52,7 @@ def status(task_id):
 
 
 @blp.route('/tasks/<uuid:task_id>/result')
+@auth.login_required
 @blp.response(SolverOutputSchema)
 def result(task_id):
     """Get solver task result"""
