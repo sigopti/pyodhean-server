@@ -30,7 +30,9 @@ def init_app(app):
         users = {}
         with open(app.config["AUTH_USERS"]) as users_db:
             for row in csv.reader(users_db):
-                users[row[0]] = row[1]
+                # Skip empty rows
+                if row:
+                    users[row[0]] = row[1]
         if username in users:
             return check_password_hash(users.get(username), password)
         return False
