@@ -3,12 +3,13 @@ import pytest
 
 from pyodhean_server.app import create_app
 
+from .common import TestingConfig
 
-@pytest.fixture
+
+@pytest.fixture(params=[TestingConfig])
 def init_app(request):
     """Initialize test application"""
-    request.cls.app = create_app()
-    request.cls.app.config['TESTING'] = True
+    request.cls.app = create_app(request.param)
     request.cls.client = request.cls.app.test_client()
 
 

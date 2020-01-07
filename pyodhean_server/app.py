@@ -8,11 +8,16 @@ from pyodhean_server import logger
 from pyodhean_server.settings import DefaultConfig
 
 
-def create_app():
-    """Create application"""
+def create_app(config_class=None):
+    """Create application
+
+    :param class config_class: Configuration class. This parameter is typically
+        used for tests. In production, parameters are passed using the file in
+        FLASK_SETTINGS_FILE environment variable.
+    """
     app = Flask('PyODHeaN server')
 
-    app.config.from_object(DefaultConfig)
+    app.config.from_object(config_class or DefaultConfig)
     # Override config with optional settings file
     app.config.from_envvar('FLASK_SETTINGS_FILE', silent=True)
     logger.init_app(app)
