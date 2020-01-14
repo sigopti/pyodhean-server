@@ -323,6 +323,15 @@ class OutputGlobalIndicatorsSchema(Schema):
     pumps_operation_cost = ma.fields.Float(
         required=True
     )
+    total_capex = ma.fields.Float(
+        required=True
+    )
+    total_opex = ma.fields.Float(
+        required=True
+    )
+    total_cost = ma.fields.Float(
+        required=True
+    )
 
 
 class OutputSolutionSchema(Schema):
