@@ -147,12 +147,10 @@ Create pyodhean user::
 
    adduser --system --no-create-home --group pyodhean
 
-Create directories to store logs and PIDs::
+Create log directory::
 
-    mkdir /var/log/pyodhean-celery
-    chmod pyodhean:pyodhean /var/log/pyodhean-celery
-    mkdir /var/run/pyodhean-celery
-    chmod pyodhean:pyodhean /var/run/pyodhean-celery
+    mkdir -m 755 /var/log/pyodhean-celery
+    chown pyodhean:pyodhean /var/log/pyodhean-celery
 
 Copy systemd directory from docs/deployment/etc into /etc.
 
