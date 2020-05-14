@@ -8,9 +8,6 @@ from pprint import pprint
 from pyodhean_server.app import create_app
 
 
-DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
-
-
 app = create_app()
 
 json_input = {
