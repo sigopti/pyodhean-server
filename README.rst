@@ -127,7 +127,7 @@ The pyodhean directory should look like this:::
         pyodhean-server
 
 Note: The pyodhean and pyodhean-server repositories can be stored anywhere.
-They do not have to be in the pyodhean repository.
+They do not have to be in the pyodhean directory.
 
 Edit /etc/apache2/sites-available/pyodhean.conf.
 
