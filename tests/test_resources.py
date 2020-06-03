@@ -1,6 +1,5 @@
 """Resources tests"""
 import time
-import json
 from unittest import mock
 
 import pytest
@@ -20,11 +19,7 @@ class TestResources:
     @pytest.mark.usefixtures('init_app')
     def test_solve_redis_connection_error(self, json_input):
         with mock.patch.object(solve, 'delay', side_effect=OperationalError):
-            response = self.client.post(
-                '/solver/tasks/',
-                data=json.dumps(json_input),
-                content_type='application/json'
-            )
+            response = self.client.post('/solver/tasks/', json=json_input)
         assert response.status_code == 503
 
     @pytest.mark.usefixtures('init_app')
@@ -32,11 +27,7 @@ class TestResources:
         p1k1 = json_input['nodes']['production'][0]['technologies']['k1']
         p1k1['t_in_min'] = 90
         p1k1['t_out_max'] = 80
-        response = self.client.post(
-            '/solver/tasks/',
-            data=json.dumps(json_input),
-            content_type='application/json'
-        )
+        response = self.client.post('/solver/tasks/', json=json_input)
         assert response.status_code == 422
         errors = response.json['errors']['nodes']['production']['0'][
             'technologies']['k1']['value']['_schema']
@@ -47,11 +38,7 @@ class TestResources:
         c_1 = json_input['nodes']['consumption'][0]
         c_1['t_in'] = 90
         c_1['t_out'] = 80
-        response = self.client.post(
-            '/solver/tasks/',
-            data=json.dumps(json_input),
-            content_type='application/json'
-        )
+        response = self.client.post('/solver/tasks/', json=json_input)
         assert response.status_code == 422
         errors = response.json['errors']['nodes']['consumption']['0'][
             '_schema']
@@ -62,11 +49,7 @@ class TestResources:
         p_1 = json_input['nodes']['production'][0]
         p_1['technologies']['k1']['coverage_rate'] = 0.9
         p_1['technologies']['k2']['coverage_rate'] = 0.5
-        response = self.client.post(
-            '/solver/tasks/',
-            data=json.dumps(json_input),
-            content_type='application/json'
-        )
+        response = self.client.post('/solver/tasks/', json=json_input)
         assert response.status_code == 422
         errors = response.json['errors']['nodes']['production']['0']['_schema']
         assert (
@@ -77,11 +60,7 @@ class TestResources:
     def test_solve_link_without_node(self, json_input):
         json_input['links'].append(
             {'length': 10.0, 'source': [10.0, 10.0], 'target': [20.0, 20.0]})
-        response = self.client.post(
-            '/solver/tasks/',
-            data=json.dumps(json_input),
-            content_type='application/json'
-        )
+        response = self.client.post('/solver/tasks/', json=json_input)
         assert response.status_code == 422
         errors = response.json['errors']['_schema']
         assert 'Network contains links with no node.' in errors
@@ -127,11 +106,7 @@ class TestResources:
         for original task ID will fail on a second attempt.
         """
         # Post task
-        response = self.client.post(
-            '/solver/tasks/',
-            data=json.dumps(json_input),
-            content_type='application/json'
-        )
+        response = self.client.post('/solver/tasks/', json=json_input)
         task_id = response.json['task_id']
         # Wait until task is completed
         while self.client.get(
