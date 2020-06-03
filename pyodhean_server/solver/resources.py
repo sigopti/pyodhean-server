@@ -1,5 +1,5 @@
 """Solver API Blueprint"""
-
+import pathlib
 import json
 
 from flask import current_app
@@ -30,6 +30,13 @@ def enqueue(json_input):
         abort(503)
     current_app.logger.info("Task %(task_id)s enqueued.", {'task_id': task.id})
     current_app.logger.debug(json.dumps(json_input))
+    # Log request to file
+    io_files_dir = current_app.config.get('IO_FILES_DIR')
+    if io_files_dir is not None:
+        with (
+            pathlib.Path(io_files_dir) / f"{task.id}-request.json"
+        ).open("w") as json_file:
+            json_file.write(json.dumps(json_input, indent=2))
     return task
 
 

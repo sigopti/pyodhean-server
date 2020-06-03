@@ -1,4 +1,7 @@
 """PyODHeaN solver task"""
+import pathlib
+import json
+
 from celery import shared_task
 from celery.utils.log import get_task_logger
 
@@ -37,8 +40,8 @@ SOLVER_STATUSES_MAPPING = {
 }
 
 
-@shared_task
-def solve(json_input):
+@shared_task(bind=True)
+def solve(self, json_input):
     """Solve PyODHeaN model"""
     solver = JSONInterface(OPTIONS)
     logger.info('Starting solver')
@@ -51,4 +54,11 @@ def solve(json_input):
         logger.info(
             'Solver succeeded with status %(status)s', {'status': status})
     json_output['status'] = SOLVER_STATUSES_MAPPING[status]
+    # Log response to file
+    io_files_dir = self.app.conf.get('io_files_dir')
+    if io_files_dir is not None:
+        with (
+            pathlib.Path(io_files_dir) / f"{self.request.id}-response.json"
+        ).open("w") as json_file:
+            json_file.write(json.dumps(json_input, indent=2))
     return json_output

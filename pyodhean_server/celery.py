@@ -18,6 +18,8 @@ if 'CELERY_BROKER_URL' in os.environ:
     app.conf.update(broker_url=os.environ['CELERY_BROKER_URL'])
 if 'CELERY_RESULT_BACKEND' in os.environ:
     app.conf.update(result_backend=os.environ['CELERY_RESULT_BACKEND'])
+if 'IO_FILES_DIR' in os.environ:
+    app.conf.update(io_files_dir=os.environ['IO_FILES_DIR'])
 
 
 # https://stackoverflow.com/questions/9824172/find-out-whether-celery-task-exists
