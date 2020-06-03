@@ -38,7 +38,7 @@ def init_app(app):
         # Remove Flask default handler
         app.logger.removeHandler(default_handler)
 
-        # Use WatchedFileHandler to open an logrotate rotate the log file
+        # Use WatchedFileHandler to reopen if logrotate rotates the log file
         file_handler = WatchedFileHandler(log_dir / 'pyodhean.log')
 
         # Create record formatter
