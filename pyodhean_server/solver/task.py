@@ -1,8 +1,8 @@
 """PyODHeaN solver task"""
+from celery import shared_task
 from celery.utils.log import get_task_logger
 
 from pyodhean.interface import JSONInterface
-from pyodhean_server.celery import app
 
 
 logger = get_task_logger(__name__)
@@ -37,7 +37,7 @@ SOLVER_STATUSES_MAPPING = {
 }
 
 
-@app.task
+@shared_task
 def solve(json_input):
     """Solve PyODHeaN model"""
     solver = JSONInterface(OPTIONS)

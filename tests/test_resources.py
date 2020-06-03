@@ -8,7 +8,7 @@ from kombu.exceptions import OperationalError
 
 from pyodhean_server.solver.task import solve, CELERY_STATUSES_MAPPING
 
-from .utils import celery_running, redis_running
+from .utils import redis_running
 
 
 DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
@@ -91,10 +91,8 @@ class TestResources:
         assert '/tasks/{}/status'.format(DUMMY_TASK_ID) in response.json[
             'message']
 
-    @pytest.mark.skipif(
-        not celery_running(), reason="This test requires Celery")
-    @pytest.mark.skipif(
-        not redis_running(), reason="This test requires Redis")
+    @pytest.mark.skipif(not redis_running(), reason="This test requires Redis")
+    @pytest.mark.usefixtures('celery_worker')
     @pytest.mark.usefixtures('init_app')
     def test_result_query_multiple_times(self, json_input):
         """Test result can be queried several times
@@ -104,6 +102,10 @@ class TestResources:
         In practice, the result may be lost if queried several times.
         A reproducible case is when another task ID is queried. Then querying
         for original task ID will fail on a second attempt.
+
+        This test serves two purposes:
+        - Test the whole post request / get response procedure
+        - Test the results may be queries several times using Redis
         """
         # Post task
         response = self.client.post('/solver/tasks/', json=json_input)
