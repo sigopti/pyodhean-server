@@ -14,6 +14,7 @@ DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
 
 class TestAuth:
 
+    @pytest.mark.usefixtures('celery_worker')
     def test_auth_resource(self, tmp_path):
         """Test authentication feature
 
