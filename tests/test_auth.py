@@ -1,6 +1,5 @@
 """Authentication extension tests"""
 import base64
-from pathlib import Path
 
 from werkzeug.security import generate_password_hash
 
@@ -15,14 +14,14 @@ DUMMY_TASK_ID = '00000000-0000-0000-0000-000000000000'
 
 class TestAuth:
 
-    def test_auth_resource(self, tmpdir):
+    def test_auth_resource(self, tmp_path):
         """Test authentication feature
 
         Only "status" route is tested. The point is only to test the feature.
         """
 
         # Create users database file
-        users_db_file = Path(tmpdir) / 'users.db'
+        users_db_file = tmp_path / 'users.db'
         with open(users_db_file, 'w') as users_db:
             users_db.write(','.join(('test', generate_password_hash('test'))))
 
@@ -64,8 +63,8 @@ class TestAuth:
         ):
             create_app(AuthTestingConfig)
 
-    def test_auth_missing_auth_users_db_file(self, tmpdir):
-        users_db_file = Path(tmpdir) / 'users.db'
+    def test_auth_missing_auth_users_db_file(self, tmp_path):
+        users_db_file = tmp_path / 'users.db'
 
         class AuthTestingConfig(TestingConfig):
             AUTH_ENABLED = True
