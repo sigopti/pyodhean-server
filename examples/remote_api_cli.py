@@ -41,7 +41,8 @@ if args.user:
 
 # Send task to solver
 response = requests.post(
-    args.host + '/solver/tasks/', data=json.dumps(json_input),
+    args.host + '/solver/tasks/',
+    json=json_input,
     headers=headers,
 )
 task_id = response.json()['task_id']

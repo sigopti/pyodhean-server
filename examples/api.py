@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name
 
 import time
-import json
 from pprint import pprint
 
 from pyodhean_server.app import create_app
@@ -65,7 +64,7 @@ json_input = {
 client = app.test_client()
 
 # Send task to solver
-response = client.post('/solver/tasks/', data=json.dumps(json_input))
+response = client.post('/solver/tasks/', json=json_input)
 task_id = response.json['task_id']
 
 # Check status until it's over
