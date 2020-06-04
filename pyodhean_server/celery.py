@@ -29,3 +29,9 @@ def cb_set_sent_state(sender=None, headers=None, **kwargs):
     task = app.tasks.get(sender)
     backend = task.backend
     backend.store_result(headers['id'], None, 'SENT')
+
+
+def init_app(flask_app):
+    """Set Celery config from application"""
+    app.conf['broker_url'] = flask_app.config['CELERY_BROKER_URL']
+    app.conf['result_backend'] = flask_app.config['CELERY_RESULT_BACKEND']

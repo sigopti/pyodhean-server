@@ -18,6 +18,10 @@ class DefaultConfig:
         '%(remote_addr)-15s | %(method)-7s | %(url)s | %(message)s'
     )
 
+    # Celery settings
+    CELERY_BROKER_URL = 'redis://'
+    CELERY_RESULT_BACKEND = 'redis://'
+
     # OpenAPI settings
     # These settings are used by the automatic swagger API documentation.
     # They may be overidden to disable it or configure it differently.

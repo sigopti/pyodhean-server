@@ -4,11 +4,8 @@ from flask import Flask
 from flask_smorest import Api
 
 from pyodhean_server.solver.resources import blp as solver_blp
-from pyodhean_server import logger, auth
+from pyodhean_server import logger, auth, celery
 from pyodhean_server.settings import DefaultConfig
-
-# Import celery app to ensure Celery config is used
-from pyodhean_server import celery  # noqa
 
 
 def create_app(config_class=None):
@@ -20,12 +17,16 @@ def create_app(config_class=None):
     """
     app = Flask('PyODHeaN server')
 
+    # Load Flask config and override with optional settings file
     app.config.from_object(config_class or DefaultConfig)
-    # Override config with optional settings file
     app.config.from_envvar('FLASK_SETTINGS_FILE', silent=True)
+
+    # Initialize extensions
     logger.init_app(app)
     auth.init_app(app)
+    celery.init_app(app)
 
+    # Create API
     api = Api(app)
     api.register_blueprint(solver_blp)
 
