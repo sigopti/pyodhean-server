@@ -30,12 +30,6 @@ def celery_config():
     }
 
 
-@pytest.fixture(scope='session')
-def celery_includes():
-    # Include celery module to register signal
-    return ('pyodhean_server.celery', )
-
-
 @pytest.fixture
 def json_input():
     return {
