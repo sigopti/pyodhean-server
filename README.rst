@@ -65,7 +65,7 @@ Check ipopt is correctly installed::
 
 Launch worker::
 
-    celery -A pyodhean_server.celery worker
+    celery -A pyodhean_server worker
 
 Configure and launch web API server
 -----------------------------------
