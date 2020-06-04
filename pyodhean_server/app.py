@@ -7,6 +7,9 @@ from pyodhean_server.solver.resources import blp as solver_blp
 from pyodhean_server import logger, auth
 from pyodhean_server.settings import DefaultConfig
 
+# Import celery app to ensure Celery config is used
+from pyodhean_server import celery  # noqa
+
 
 def create_app(config_class=None):
     """Create application
