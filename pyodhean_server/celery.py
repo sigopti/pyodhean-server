@@ -14,6 +14,11 @@ celery = Celery(
 )
 celery.config_from_object(DefaultCeleryConfig)
 
+# https://stackoverflow.com/questions/52372117/how-to-call-a-celery-shared-task
+# This seems to work around the issue of the task being owned by the Celery
+# default app rather than this Celery app.
+celery.set_default()
+
 if 'CELERY_BROKER_URL' in os.environ:
     celery.conf.update(broker_url=os.environ['CELERY_BROKER_URL'])
 if 'CELERY_RESULT_BACKEND' in os.environ:
