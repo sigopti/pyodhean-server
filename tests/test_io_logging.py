@@ -57,4 +57,6 @@ class TestIOLogging:
         response_file = next(
             f for f in log_files if f.name == f"{task_id}-response.json"
         )
-        assert json.load(response_file.open()) == json_input
+        # We can't test that response_file == response.json because the
+        # response is modified by API schemas.
+        assert 'solution' in json.load(response_file.open())

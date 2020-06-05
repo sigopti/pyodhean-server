@@ -60,5 +60,5 @@ def solve(self, json_input):
         with (
             pathlib.Path(io_files_dir) / f"{self.request.id}-response.json"
         ).open("w") as json_file:
-            json_file.write(json.dumps(json_input, indent=2))
+            json_file.write(json.dumps(json_output, indent=2))
     return json_output
