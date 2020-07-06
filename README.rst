@@ -100,7 +100,7 @@ Create a Pyhton 3 virtual environment in the pyodhean directory::
     virtualenv -p /usr/bin/python3 venv-pyodhean
 
 Pull code from pyodhean and pyodhean-server repositories and install them in
-the virtual environment ::
+the virtual environment::
 
     source venv-pyodhean/bin/activate
     pip install ./pyodhean
@@ -158,12 +158,31 @@ Edit pyodhean-celery configuration file to specify the paths.
 
    /etc/systemd/system/pyodhean-celery.service.d/pyodhean-celery.conf
 
-Start the service and enable it for automatic start on system startup ::
+Start the service and enable it for automatic start on system startup::
 
     systemctrl enable pyodhean-celery
     systemctrl start pyodhean-celery
 
-Configure file log rotation
----------------------------
+Configure log files rotation
+----------------------------
 
 Copy logrotate.d directory from docs/deployment/etc into /etc.
+
+Configure authentication
+------------------------
+
+Create a users DB file the apache user can read::
+
+   touch /path/to/project/users.db
+   chown root:www-data /path/to/project/users.db
+   chmod 640 /path/to/project/users.db
+
+Add users to the DB file::
+
+    source venv-pyodhean/bin/activate
+    flask add-user /path/to/project/users.db user password
+    
+Edit application configuration to enable authorization and pass users BD file::
+
+   AUTH_ENABLED=True
+   AUTH_USERS=/path/to/project/users.db
