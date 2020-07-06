@@ -1,7 +1,7 @@
 """Authentication extension tests"""
 import base64
 
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import pytest
 
@@ -78,3 +78,26 @@ class TestAuth:
                 match="Missing users DB file."
         ):
             create_app(AuthTestingConfig)
+
+    @pytest.mark.usefixtures('init_app')
+    def test_auth_add_user(self, tmp_path):
+        users_db_file = tmp_path / 'users.db'
+        result = self.app.test_cli_runner().invoke(
+            args=('add-user', str(users_db_file), 'user_1', 'password_1')
+        )
+        assert result.exit_code == 0
+        with open(users_db_file) as users_db:
+            users = [l.split(',') for l in users_db.read().splitlines()]
+        assert len(users) == 1
+        assert check_password_hash(users[0][1], 'password_1')
+
+        # Run twice to check line is appended
+        result = self.app.test_cli_runner().invoke(
+            args=('add-user', str(users_db_file), 'user_2', 'password_2')
+        )
+        assert result.exit_code == 0
+        with open(users_db_file) as users_db:
+            users = [l.split(',') for l in users_db.read().splitlines()]
+        assert len(users) == 2
+        assert check_password_hash(users[0][1], 'password_1')
+        assert check_password_hash(users[1][1], 'password_2')

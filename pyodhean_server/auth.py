@@ -3,7 +3,8 @@
 import csv
 from pathlib import Path
 
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+import click
 from flask_httpauth import HTTPBasicAuth
 from flask_smorest import abort
 
@@ -42,3 +43,17 @@ def init_app(app):
     def auth_error(status):  # pylint: disable=unused-variable
         # Call abort to trigger error handler and get consistent JSON output
         abort(status, message="Authentication error")
+
+    app.cli.add_command(add_user)
+
+
+@click.command()
+@click.argument('users_db_file', type=click.File(mode='a'))
+@click.argument('user')
+@click.argument('password')
+def add_user(users_db_file, user, password):
+    """Add USER with PASSWORD to USERS_DB_FILE
+
+    To remove a user, just edit the file and remove the line manually
+    """
+    users_db_file.write(f"{user},{generate_password_hash(password)}\n")
