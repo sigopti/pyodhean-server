@@ -37,6 +37,7 @@ class TestAuth:
         response = client.get(
             '/solver/tasks/{}/status'.format(DUMMY_TASK_ID))
         assert response.status_code == 401
+        assert response.json["message"] == "Authentication error"
 
         # Wrong credentials
         creds = base64.b64encode('test:wrong'.encode()).decode()
@@ -45,6 +46,7 @@ class TestAuth:
             headers={'Authorization': 'Basic ' + creds},
         )
         assert response.status_code == 401
+        assert response.json["message"] == "Authentication error"
 
         # Right credentials
         creds = base64.b64encode('test:test'.encode()).decode()

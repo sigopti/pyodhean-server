@@ -5,6 +5,7 @@ from pathlib import Path
 
 from werkzeug.security import check_password_hash
 from flask_httpauth import HTTPBasicAuth
+from flask_smorest import abort
 
 from .exceptions import PyodheanServerConfigError
 
@@ -36,3 +37,8 @@ def init_app(app):
         if username in users:
             return check_password_hash(users.get(username), password)
         return False
+
+    @auth.error_handler
+    def auth_error(status):  # pylint: disable=unused-variable
+        # Call abort to trigger error handler and get consistent JSON output
+        abort(status, message="Authentication error")
