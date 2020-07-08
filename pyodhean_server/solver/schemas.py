@@ -296,6 +296,12 @@ class OutputLinkSchema(LinkSchema):
     t_supply_out = ma.fields.Float(
         required=True
     )
+    power = ma.fields.Float(
+        required=True
+    )
+    yearly_energy = ma.fields.Float(
+        required=True
+    )
 
 
 class OutputGlobalIndicatorsSchema(Schema):
@@ -330,6 +336,12 @@ class OutputGlobalIndicatorsSchema(Schema):
         required=True
     )
     total_cost = ma.fields.Float(
+        required=True
+    )
+    yearly_production = ma.fields.Float(
+        required=True
+    )
+    total_production = ma.fields.Float(
         required=True
     )
 
