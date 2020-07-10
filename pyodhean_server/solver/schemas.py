@@ -169,8 +169,8 @@ class SolverInputSchema(Schema):
             set(tuple(c['id']) for c in data['nodes']['consumption'])
         )
         link_coords = (
-            set(tuple(l['source']) for l in data['links']) |
-            set(tuple(l['target']) for l in data['links'])
+            set(tuple(link['source']) for link in data['links']) |
+            set(tuple(link['target']) for link in data['links'])
         )
         if link_coords - node_coords:
             raise ma.ValidationError("Network contains links with no node.")

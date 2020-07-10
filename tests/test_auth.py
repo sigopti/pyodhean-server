@@ -87,7 +87,7 @@ class TestAuth:
         )
         assert result.exit_code == 0
         with open(users_db_file) as users_db:
-            users = [l.split(',') for l in users_db.read().splitlines()]
+            users = [line.split(',') for line in users_db.read().splitlines()]
         assert len(users) == 1
         assert check_password_hash(users[0][1], 'password_1')
 
@@ -97,7 +97,7 @@ class TestAuth:
         )
         assert result.exit_code == 0
         with open(users_db_file) as users_db:
-            users = [l.split(',') for l in users_db.read().splitlines()]
+            users = [line.split(',') for line in users_db.read().splitlines()]
         assert len(users) == 2
         assert check_password_hash(users[0][1], 'password_1')
         assert check_password_hash(users[1][1], 'password_2')
