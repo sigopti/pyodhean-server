@@ -50,5 +50,5 @@ setup(
         "marshmallow>=3.0.0",
         "flask_httpauth>=3.0.0"
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests*"]),
 )
