@@ -6,9 +6,6 @@ class DefaultConfig:
 
     API_TITLE = 'PyODHeaN server'
 
-    # pyodhean-server API version
-    API_VERSION = 0.1
-
     # Authentication
     AUTH_ENABLED = False
 

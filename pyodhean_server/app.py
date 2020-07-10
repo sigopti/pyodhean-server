@@ -6,6 +6,7 @@ from flask_smorest import Api
 from pyodhean_server.solver.resources import blp as solver_blp
 from pyodhean_server import logger, auth, celery
 from pyodhean_server.settings import DefaultConfig
+from pyodhean_server import __version__
 
 
 def create_app(config_class=None):
@@ -27,7 +28,7 @@ def create_app(config_class=None):
     celery.init_app(app)
 
     # Create API
-    api = Api(app)
+    api = Api(app, spec_kwargs={"version": __version__})
     api.register_blueprint(solver_blp)
 
     app.logger.info("Pyodhean server started. Ready to rock.")
