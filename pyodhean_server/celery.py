@@ -23,6 +23,8 @@ if 'CELERY_BROKER_URL' in os.environ:
     celery.conf.update(broker_url=os.environ['CELERY_BROKER_URL'])
 if 'CELERY_RESULT_BACKEND' in os.environ:
     celery.conf.update(result_backend=os.environ['CELERY_RESULT_BACKEND'])
+if 'CELERY_DEFAULT_QUEUE' in os.environ:
+    celery.conf.update(task_default_queue=os.environ['CELERY_DEFAULT_QUEUE'])
 if 'IO_FILES_DIR' in os.environ:
     celery.conf.update(io_files_dir=os.environ['IO_FILES_DIR'])
 
@@ -40,3 +42,4 @@ def init_app(app):
     """Set Celery config from application"""
     celery.conf['broker_url'] = app.config['CELERY_BROKER_URL']
     celery.conf['result_backend'] = app.config['CELERY_RESULT_BACKEND']
+    celery.conf['task_default_queue'] = app.config['CELERY_DEFAULT_QUEUE']

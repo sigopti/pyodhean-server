@@ -20,6 +20,7 @@ class DefaultConfig:
     # Celery settings
     CELERY_BROKER_URL = 'redis://'
     CELERY_RESULT_BACKEND = 'redis://'
+    CELERY_DEFAULT_QUEUE = 'pyodhean'
 
     # OpenAPI settings
     # These settings are used by the automatic swagger API documentation.
@@ -40,4 +41,5 @@ class DefaultCeleryConfig:
     """Default Celery configuration"""
     broker_url = 'redis://'
     result_backend = 'redis://'
+    task_default_queue = 'pyodhean'
     task_track_started = True
