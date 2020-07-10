@@ -15,7 +15,7 @@ def create_app(config_class=None):
         used for tests. In production, parameters are passed using the file in
         FLASK_SETTINGS_FILE environment variable.
     """
-    app = Flask('PyODHeaN server')
+    app = Flask('pyodhean_server')
 
     # Load Flask config and override with optional settings file
     app.config.from_object(config_class or DefaultConfig)
