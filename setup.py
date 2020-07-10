@@ -14,7 +14,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="pyodhean-server",
-    version="0.0",
+    version="1.0.0b1",
     description="Optimization of District Heating Networks",
     long_description=long_description,
     url="https://github.com/sigopti/pyodhean-server",
@@ -29,7 +29,7 @@ setup(
     ],
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering",
         (
