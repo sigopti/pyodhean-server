@@ -2,6 +2,22 @@
 PyODHeaN Server
 ===============
 
+.. image:: https://img.shields.io/pypi/v/pyodhean-server.svg
+    :target: https://pypi.org/project/pyodhean-server/
+    :alt: Latest version
+
+.. image:: https://img.shields.io/pypi/pyversions/pyodhean-server.svg
+    :target: https://pypi.org/project/pyodhean-server/
+    :alt: Python versions
+
+.. image:: https://img.shields.io/pypi/l/pyodhean-server.svg
+    :target: https://github.com/sigopti/pyodhean-server/blob/master/LICENSE
+    :alt: License
+
+.. image:: https://dev.azure.com/sigopti/pyomo/_apis/build/status/sigopti.pyodhean-server?branchName=master
+    :target: https://dev.azure.com/sigopti/pyomo/_build?definitionId=2
+    :alt: Build status
+
 Optimization of District Heating Networks
 
 This package provides the solver server.
