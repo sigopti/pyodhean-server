@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include: ['*']
+  tags:
+    include: ['*']
+
+resources:
+  repositories:
+    - repository: asottile
+      type: github
+      name: asottile/azure-pipeline-templates
+      ref: refs/tags/v2.0.0
+      endpoint: sigopti
+
+stages:
+  - stage: lint
+    jobs:
+      - template: job--python-tox.yml@asottile
+        parameters:
+          toxenvs: [lint]
+          os: linux
+          coverage: false
+  - stage: test
+    jobs:
+      - template: job--python-tox.yml@asottile
+        parameters:
+          toxenvs: [py36, py38]
+          os: linux
+          coverage: false
+          pre_test:
+              - script: |
+                  sudo apt-get install make g++ gfortran pkgconf liblapack-dev
+                  git clone --depth=1 https://github.com/coin-or/coinbrew
+                  cd coinbrew
+                  sudo ./coinbrew fetch build Ipopt@3.13.0 --prefix=/usr/local
+              - script: sudo apt-get install redis
