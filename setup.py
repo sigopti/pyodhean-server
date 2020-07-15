@@ -14,7 +14,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="pyodhean-server",
-    version="1.0.0b1",
+    version="1.0.0b2",
     description="Optimization of District Heating Networks",
     long_description=long_description,
     url="https://github.com/sigopti/pyodhean-server",
