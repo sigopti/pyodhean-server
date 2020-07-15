@@ -1,8 +1,8 @@
 """PyODHeaN server application"""
 
 from flask import Flask
-from flask_smorest import Api
 
+from pyodhean_server.api import Api
 from pyodhean_server.solver.resources import blp as solver_blp
 from pyodhean_server import logger, auth, celery
 from pyodhean_server.settings import DefaultConfig
