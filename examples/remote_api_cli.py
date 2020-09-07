@@ -4,7 +4,6 @@
 import time
 import json
 import argparse
-import base64
 from pprint import pprint
 
 import requests
@@ -27,37 +26,33 @@ args = parser.parse_args()
 
 json_input = json.load(args.input_file)
 
-headers = {}
+kwargs = {}
 
 if args.user:
     if args.password is None:
         parser.error('"password" is required when "user" is specified')
-    creds = base64.b64encode(
-        '{user}:{password}'.format(user=args.user, password=args.password)
-        .encode()
-    ).decode()
-    headers['Authorization'] = 'Basic ' + creds
+    kwargs["auth"] = requests.auth.HTTPBasicAuth(args.user, args.password)
 
 
 # Send task to solver
 response = requests.post(
     args.host + '/solver/tasks/',
     json=json_input,
-    headers=headers,
+    **kwargs
 )
 task_id = response.json()['task_id']
 
 # Check status until it's over
 while requests.get(
         args.host + '/solver/tasks/{}/status'.format(task_id),
-        headers=headers,
+        **kwargs
 ).json()['status'] in ('waiting', 'ongoing'):
     time.sleep(1)
 
 # Result now available
 response = requests.get(
     args.host + '/solver/tasks/{}/result'.format(task_id),
-    headers=headers,
+    **kwargs
 )
 result = response.json()
 
