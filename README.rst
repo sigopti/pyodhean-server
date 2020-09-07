@@ -196,6 +196,7 @@ Create a users DB file the apache user can read::
 Add users to the DB file::
 
     source venv-pyodhean/bin/activate
+    export FLASK_APP=pyodhean_server.app
     flask add-user /path/to/project/users.db user password
     
 Edit application configuration to enable authorization and pass users BD file::
