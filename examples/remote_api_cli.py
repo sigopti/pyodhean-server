@@ -31,7 +31,7 @@ kwargs = {}
 if args.user:
     if args.password is None:
         parser.error('"password" is required when "user" is specified')
-    kwargs["auth"] = requests.auth.HTTPBasicAuth(args.user, args.password)
+    kwargs["auth"] = (args.user, args.password)
 
 
 # Send task to solver
