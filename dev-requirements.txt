@@ -1,6 +1,6 @@
 pytest == 6.1.1
 pyodhean == 1.0.0b1
-celery == 5.0.0
+celery == 5.0.1
 pytest-celery == 0.0.0a1
 redis == 3.5.3
 werkzeug == 1.0.1
