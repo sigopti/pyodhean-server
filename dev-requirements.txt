@@ -8,6 +8,6 @@ flask == 1.1.2
 python-dotenv == 0.15.0
 flask-smorest == 0.25.0
 marshmallow == 3.9.1
-webargs == 7.0.0
+webargs == 7.0.1
 apispec == 4.0.0
 flask_httpauth == 4.2.0
