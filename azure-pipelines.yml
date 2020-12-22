@@ -24,7 +24,7 @@ stages:
     jobs:
       - template: job--python-tox.yml@asottile
         parameters:
-          toxenvs: [py36, py38]
+          toxenvs: [py36, py39]
           os: linux
           coverage: false
           pre_test:
