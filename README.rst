@@ -47,7 +47,7 @@ Use coinbrew to fetch and compile Ipopt and dependencies::
     # Run as unprivileged user
     git clone --depth=1 https://github.com/coin-or/coinbrew
     cd coinbrew
-    ./coinbrew Ipopt:releases/3.13.2 fetch
+    ./coinbrew Ipopt:releases/3.13.3 fetch
     ./coinbrew build Ipopt
 
 Copy files to project directory::
