@@ -32,5 +32,5 @@ stages:
                   sudo apt-get install make g++ gfortran pkgconf liblapack-dev
                   git clone --depth=1 https://github.com/coin-or/coinbrew
                   cd coinbrew
-                  sudo ./coinbrew fetch build Ipopt@3.13.2 --prefix=/usr/local
+                  sudo ./coinbrew fetch build Ipopt@3.13.3 --prefix=/usr/local
               - script: sudo apt-get install redis
