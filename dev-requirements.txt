@@ -9,5 +9,5 @@ python-dotenv == 0.15.0
 flask-smorest == 0.28.0
 marshmallow == 3.10.0
 webargs == 7.0.1
-apispec == 4.0.0
+apispec == 4.2.0
 flask_httpauth == 4.2.0
