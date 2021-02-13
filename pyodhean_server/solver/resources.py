@@ -18,7 +18,7 @@ blp = Blueprint(
 @blp.route('/tasks/', methods=['POST'])
 @blp.login_required
 @blp.arguments(SolverInputSchema)
-@blp.response(TaskIdSchema)
+@blp.response(200, TaskIdSchema)
 def enqueue(json_input):
     """Enqueue solver task"""
     try:
@@ -40,7 +40,7 @@ def enqueue(json_input):
 
 @blp.route('/tasks/<uuid:task_id>/status')
 @blp.login_required
-@blp.response(StatusSchema)
+@blp.response(200, StatusSchema)
 def status(task_id):
     """Get solver task status"""
     task_state = solve.backend.get_state(str(task_id))
@@ -58,7 +58,7 @@ def status(task_id):
 
 @blp.route('/tasks/<uuid:task_id>/result')
 @blp.login_required
-@blp.response(SolverOutputSchema)
+@blp.response(200, SolverOutputSchema)
 def result(task_id):
     """Get solver task result"""
     task_state = solve.backend.get_state(str(task_id))
