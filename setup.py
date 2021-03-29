@@ -20,7 +20,7 @@ setup(
     url="https://github.com/sigopti/pyodhean-server",
     author="Nobatek/INEF4",
     author_email="jlafrechoux@nobatek.com",
-    license="GPLv3+",
+    license="AGPLv3+",
     keywords=[
         "District",
         "Heating",
