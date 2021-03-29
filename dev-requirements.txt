@@ -7,7 +7,7 @@ werkzeug == 1.0.1
 flask == 1.1.2
 python-dotenv == 0.15.0
 flask-smorest == 0.29.0
-marshmallow == 3.10.0
+marshmallow == 3.11.0
 webargs == 7.0.1
 apispec == 4.3.0
 flask_httpauth == 4.2.0
