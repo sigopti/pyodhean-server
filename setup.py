@@ -48,7 +48,7 @@ setup(
         "werkzeug>=1.0.0",
         "flask>=1.1.0",
         "python-dotenv>=0.9.0",
-        "flask-smorest>=0.29.0,<0.30",
+        "flask-smorest>=0.30.0,<0.31",
         "marshmallow>=3.0.0",
         "flask_httpauth>=4.0.0"
     ],
