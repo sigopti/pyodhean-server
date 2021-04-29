@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: flask-smorest
+    versions:
+    - 0.30.0
+  - dependency-name: webargs
+    versions:
+    - 8.0.0
+  - dependency-name: python-dotenv
+    versions:
+    - 0.16.0
