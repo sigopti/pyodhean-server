@@ -45,11 +45,11 @@ setup(
     install_requires=[
         "pyodhean>=1.0.0b1",
         "celery[redis]>=4.4.0,<6.0",
-        "werkzeug>=1.0.0",
-        "flask>=1.1.0",
+        "werkzeug>=2.0,<3",
+        "flask>=2.0,<3",
         "python-dotenv>=0.9.0",
-        "flask-smorest>=0.30.0,<0.31",
-        "marshmallow>=3.0.0",
+        "flask-smorest>=0.31.0,<0.32",
+        "marshmallow>=3.0.0,<4",
         "flask_httpauth>=4.0.0"
     ],
     packages=find_packages(exclude=["tests*"]),

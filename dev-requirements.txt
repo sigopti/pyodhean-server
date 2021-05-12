@@ -3,10 +3,10 @@ pyodhean == 1.0.0b1
 celery == 5.0.5
 pytest-celery == 0.0.0
 redis == 3.5.3
-werkzeug == 1.0.1
-flask == 1.1.2
+werkzeug == 2.0.0
+flask == 2.0.0
 python-dotenv == 0.17.1
-flask-smorest == 0.30.0
+flask-smorest == 0.31.0
 marshmallow == 3.12.1
 webargs == 8.0.0
 apispec == 4.4.1
