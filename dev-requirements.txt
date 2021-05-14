@@ -10,4 +10,4 @@ flask-smorest == 0.31.0
 marshmallow == 3.12.1
 webargs == 8.0.0
 apispec == 4.4.1
-flask_httpauth == 4.3.0
+flask_httpauth == 4.4.0
