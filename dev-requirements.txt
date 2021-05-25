@@ -4,7 +4,7 @@ celery == 5.0.5
 pytest-celery == 0.0.0
 redis == 3.5.3
 werkzeug == 2.0.1
-flask == 2.0.0
+flask == 2.0.1
 python-dotenv == 0.17.1
 flask-smorest == 0.31.0
 marshmallow == 3.12.1
