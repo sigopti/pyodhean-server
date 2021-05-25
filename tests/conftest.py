@@ -1,16 +1,9 @@
 """Test fixtures"""
-import pyutilib.subprocess.GlobalData
-
 import pytest
 
 from pyodhean_server.app import create_app
 
 from .common import TestingConfig
-
-# https://github.com/PyUtilib/pyutilib/issues/31
-# Disable signal handling
-# Needed when using celery fixtures as task is launched in child thread
-pyutilib.subprocess.GlobalData.DEFINE_SIGNAL_HANDLERS_DEFAULT = False
 
 
 @pytest.fixture(params=[TestingConfig])
