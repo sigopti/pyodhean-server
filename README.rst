@@ -61,7 +61,7 @@ Use pip::
 
     pip install pyodhean-server
 
-pyodhean-server supports Python >= 3.6.
+pyodhean-server supports Python >= 3.7.
 
 
 Development configuration
