@@ -6,7 +6,7 @@ redis == 3.5.3
 werkzeug == 2.0.1
 flask == 2.0.1
 python-dotenv == 0.19.0
-flask-smorest == 0.31.3
+flask-smorest == 0.32.0
 marshmallow == 3.13.0
 webargs == 8.0.0
 apispec == 4.7.1
