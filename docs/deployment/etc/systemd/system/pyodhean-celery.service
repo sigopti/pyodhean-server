@@ -18,7 +18,9 @@ ExecStart=/bin/sh -c ' \
   --queues=${CELERYD_QUEUES} ${CELERYD_OPTS}'
 ExecStop=/bin/sh -c ' \
   ${CELERY_BIN} multi stopwait ${CELERYD_NODES} \
-  --pidfile=${CELERYD_PID_FILE}'
+  --pidfile=${CELERYD_PID_FILE} \
+  --logfile=${CELERYD_LOG_FILE} \
+  --loglevel=${CELERYD_LOG_LEVEL}'
 ExecReload= /bin/sh -c ' \
   PATH=${IPOPT_PATH}bin:${PATH} \
   LD_LIBRARY_PATH=${IPOPT_PATH}lib:${LD_LIBRARY_PATH} \
