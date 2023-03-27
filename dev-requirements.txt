@@ -2,7 +2,7 @@ pytest == 6.2.4
 pyodhean == 1.0.0
 celery == 5.2.2
 pytest-celery == 0.0.0
-redis == 3.5.3
+redis == 4.5.3
 werkzeug == 2.2.3
 flask == 2.0.1
 python-dotenv == 0.19.0
