@@ -44,7 +44,7 @@ setup(
     install_requires=[
         "pyodhean>=1.0.0",
         "celery[redis]>=4.4.0,<6.0",
-        "werkzeug>=2.0,<3",
+        "werkzeug>=2.0,<4",
         "flask>=2.0,<3",
         "python-dotenv>=0.9.0",
         "flask-smorest>=0.31.0,<0.33",
